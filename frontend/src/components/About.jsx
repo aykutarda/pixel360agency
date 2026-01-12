@@ -5,16 +5,16 @@ import { aboutData } from '../data/mock';
 const About = () => {
   return (
     <section className="bg-dark py-32 px-8 md:px-16">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-16">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-24">
         {/* Left - Title */}
-        <div className="md:w-1/2">
-          <h2 className="font-pixel text-white text-[36px] md:text-[56px] lg:text-[72px] leading-[1.1] tracking-tight whitespace-nowrap">
+        <div className="lg:w-1/2">
+          <h2 className="font-pixel text-white text-[32px] md:text-[48px] lg:text-[64px] leading-[1.1] tracking-tight">
             HI, I'M <span className="text-accent">M</span>ARK
           </h2>
         </div>
         
         {/* Right - Description */}
-        <div className="md:w-1/2 flex flex-col gap-8">
+        <div className="lg:w-1/2 flex flex-col gap-8">
           <p className="text-gray-400 text-sm leading-relaxed tracking-[0.1em] font-mono uppercase">
             {aboutData.description}
           </p>
