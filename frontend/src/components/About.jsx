@@ -8,8 +8,8 @@ const About = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-16">
         {/* Left - Title */}
         <div className="md:w-1/2">
-          <h2 className="font-pixel text-white text-[48px] md:text-[72px] lg:text-[96px] leading-[0.9] tracking-tight">
-            {aboutData.greeting} <span className="text-accent">M</span>ARK
+          <h2 className="font-pixel text-white text-[36px] md:text-[56px] lg:text-[72px] leading-[1.1] tracking-tight whitespace-nowrap">
+            HI, I'M <span className="text-accent">M</span>ARK
           </h2>
         </div>
         
