@@ -89,6 +89,84 @@ img {
   }
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(-3deg);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 100;
+  }
+}
+
+@keyframes dash-reverse {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 0.05em 0 0 #e6ff00, -0.05em -0.025em 0 #9333ea, 0.025em 0.05em 0 #00fff2;
+  }
+  14% {
+    text-shadow: 0.05em 0 0 #e6ff00, -0.05em -0.025em 0 #9333ea, 0.025em 0.05em 0 #00fff2;
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 #e6ff00, 0.025em 0.025em 0 #9333ea, -0.05em -0.05em 0 #00fff2;
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 #e6ff00, 0.025em 0.025em 0 #9333ea, -0.05em -0.05em 0 #00fff2;
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 #e6ff00, 0.05em 0 0 #9333ea, 0 -0.05em 0 #00fff2;
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 #e6ff00, 0.05em 0 0 #9333ea, 0 -0.05em 0 #00fff2;
+  }
+  100% {
+    text-shadow: -0.025em 0 0 #e6ff00, -0.025em -0.025em 0 #9333ea, -0.025em -0.05em 0 #00fff2;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(230, 255, 0, 0.2), 0 0 10px rgba(230, 255, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(230, 255, 0, 0.4), 0 0 40px rgba(230, 255, 0, 0.2);
+  }
+}
+
 .animate-fadeInUp {
   animation: fadeInUp 0.8s ease forwards;
 }
@@ -97,9 +175,80 @@ img {
   animation: fadeIn 0.6s ease forwards;
 }
 
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-dash {
+  animation: dash 3s linear infinite;
+}
+
+.animate-dash-reverse {
+  animation: dash-reverse 3s linear infinite;
+}
+
+/* Glitch effect for text */
+.glitch {
+  position: relative;
+  animation: glitch 2s infinite;
+}
+
+.glitch-text:hover {
+  animation: glitch 0.5s infinite;
+}
+
+.glitch-box {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Pixel text effect */
+.pixel-text {
+  text-shadow: 
+    2px 2px 0 rgba(230, 255, 0, 0.1),
+    -2px -2px 0 rgba(147, 51, 234, 0.1);
+}
+
 /* Stagger animations */
 .stagger-1 { animation-delay: 0.1s; }
 .stagger-2 { animation-delay: 0.2s; }
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
+
+/* Hover card glow effect */
+.hover-glow:hover {
+  box-shadow: 
+    0 0 20px rgba(230, 255, 0, 0.2),
+    0 0 40px rgba(230, 255, 0, 0.1),
+    inset 0 0 20px rgba(230, 255, 0, 0.05);
+}
+
+/* Neon border effect */
+.neon-border {
+  box-shadow: 
+    inset 0 0 10px rgba(230, 255, 0, 0.1),
+    0 0 10px rgba(230, 255, 0, 0.1);
+}
+
+/* Scanline effect */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+}
