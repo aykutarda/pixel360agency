@@ -7,9 +7,14 @@ const Contact = () => {
     <section className="bg-dark py-32 px-8 md:px-16">
       <div className="max-w-7xl mx-auto text-center">
         {/* Title */}
-        <h2 className="font-pixel text-white text-[48px] md:text-[72px] lg:text-[96px] leading-[0.9] tracking-tight mb-16">
-          {contactData.title[0]} <span className="text-accent">C</span>ONNECT
-        </h2>
+        <div className="mb-16">
+          <h2 className="font-pixel text-white text-[48px] md:text-[72px] lg:text-[96px] leading-[0.9] tracking-tight">
+            LET'S
+          </h2>
+          <h2 className="font-pixel text-white text-[48px] md:text-[72px] lg:text-[96px] leading-[0.9] tracking-tight">
+            <span className="text-accent">C</span>ONNECT
+          </h2>
+        </div>
         
         {/* Email Link */}
         <a 
