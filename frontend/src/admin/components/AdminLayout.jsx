@@ -204,6 +204,25 @@ const AdminLayout = ({ children }) => {
 
       {/* Main Content */}
       <main className="flex-1 min-h-screen">
+        {/* Read-Only Mode Banner */}
+        {siteStatus.read_only_mode && (
+          <div className="sticky top-0 z-40 bg-red-500/10 border-b border-red-500/30 px-6 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Lock className="w-5 h-5 text-red-500" />
+              <span className="text-red-400 text-sm font-medium">
+                🚨 Bakım Modu Aktif - İçerik yayınlanamaz
+              </span>
+            </div>
+            <button
+              onClick={toggleReadOnly}
+              disabled={togglingReadOnly}
+              className="text-xs px-3 py-1 bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors"
+            >
+              Kapat
+            </button>
+          </div>
+        )}
+
         {/* Unsaved changes warning */}
         {hasUnsavedChanges && (
           <div className="sticky top-0 z-40 bg-yellow-500/10 border-b border-yellow-500/30 px-6 py-3 flex items-center gap-3">
