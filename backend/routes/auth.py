@@ -3,6 +3,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
+from pydantic import BaseModel
 import os
 import secrets
 from motor.motor_asyncio import AsyncIOMotorClient
