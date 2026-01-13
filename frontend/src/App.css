@@ -314,6 +314,15 @@ img {
   }
 }
 
+@keyframes marquee-fast {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 .animate-marquee {
   animation: marquee 30s linear infinite;
 }
@@ -322,8 +331,13 @@ img {
   animation: marquee-slow 45s linear infinite;
 }
 
+.animate-marquee-fast {
+  animation: marquee-fast 20s linear infinite;
+}
+
 .animate-marquee:hover,
-.animate-marquee-slow:hover {
+.animate-marquee-slow:hover,
+.animate-marquee-fast:hover {
   animation-play-state: paused;
 }
 
