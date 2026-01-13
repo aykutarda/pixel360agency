@@ -12,11 +12,62 @@ import {
   ChevronUp,
   Plus,
   Trash2,
-  TestTube
+  TestTube,
+  Activity,
+  Radio,
+  Wifi,
+  WifiOff
 } from 'lucide-react';
 import { Toaster, toast } from 'sonner';
 
 const API = process.env.REACT_APP_BACKEND_URL;
+
+// Status Card Component
+const StatusCard = ({ title, configured, enabled, id, icon: Icon }) => {
+  const isActive = configured && enabled;
+  const status = !configured ? 'not_configured' : !enabled ? 'disabled' : 'active';
+  
+  const statusConfig = {
+    active: {
+      bg: 'bg-green-500/10 border-green-500/30',
+      icon: 'text-green-500',
+      badge: 'bg-green-500',
+      label: 'Aktif'
+    },
+    disabled: {
+      bg: 'bg-yellow-500/10 border-yellow-500/30',
+      icon: 'text-yellow-500',
+      badge: 'bg-yellow-500',
+      label: 'Pasif'
+    },
+    not_configured: {
+      bg: 'bg-gray-500/10 border-gray-500/30',
+      icon: 'text-gray-500',
+      badge: 'bg-gray-500',
+      label: 'Yapılandırılmadı'
+    }
+  };
+  
+  const config = statusConfig[status];
+  
+  return (
+    <div className={`p-4 border ${config.bg} relative`}>
+      <div className={`absolute top-2 right-2 w-2 h-2 rounded-full ${config.badge} ${isActive ? 'animate-pulse' : ''}`} />
+      <div className="flex items-center gap-3">
+        <div className={`w-10 h-10 rounded flex items-center justify-center ${config.bg}`}>
+          <Icon className={`w-5 h-5 ${config.icon}`} />
+        </div>
+        <div>
+          <p className="text-white font-medium text-sm">{title}</p>
+          <p className={`text-xs ${config.icon}`}>{config.label}</p>
+          {configured && id && (
+            <code className="text-xs text-gray-500 font-mono">{id}</code>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const MeasurementSettingsPage = () => {
   const [settings, setSettings] = useState(null);
