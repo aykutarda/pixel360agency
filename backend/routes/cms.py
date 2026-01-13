@@ -178,19 +178,22 @@ async def update_blog_post(post_id: str, post: BlogPostCreate):
     
     old_slug = existing.get("seo_slug")
     new_slug = post.seo_slug
+    old_status = existing.get("status")
     
     if old_slug != new_slug:
         slug_exists = await db.blog_posts.find_one({"seo_slug": new_slug, "id": {"$ne": post_id}})
         if slug_exists:
             raise HTTPException(status_code=400, detail="Slug already exists")
         
-        redirect = Redirect(
-            from_path=f"/blog/{old_slug}",
-            to_path=f"/blog/{new_slug}",
-            status_code=301,
-            note="Auto-generated on slug change"
-        )
-        await db.redirects.insert_one(redirect.dict())
+        # Only create redirect if the content was published
+        if old_status == "published":
+            redirect = Redirect(
+                from_path=f"/blog/{old_slug}",
+                to_path=f"/blog/{new_slug}",
+                status_code=301,
+                note="Auto-generated on slug change"
+            )
+            await db.redirects.insert_one(redirect.dict())
     
     update_data = post.dict()
     update_data["updated_at"] = datetime.utcnow()
