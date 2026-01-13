@@ -26,6 +26,7 @@ const ServiceEditPage = () => {
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState('content');
   const [hasChanges, setHasChanges] = useState(false);
+  const [showPublishGuard, setShowPublishGuard] = useState(false);
   
   const [formData, setFormData] = useState({
     name: '',
