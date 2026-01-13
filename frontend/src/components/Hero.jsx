@@ -98,13 +98,12 @@ const Hero = () => {
             {/* Main Title */}
             <h1 className="font-pixel text-white text-[32px] sm:text-[42px] md:text-[56px] lg:text-[72px] leading-[1.05] tracking-tight mb-4">
               {heroData.title?.map((line, idx) => (
-                <span key={idx}>
+                <span key={idx} className="block">
                   {idx === 0 ? (
                     <><span className="text-accent glitch" data-text={line.charAt(0)}>{line.charAt(0)}</span>{line.slice(1)}</>
                   ) : (
-                    <span className="bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">{line}</span>
+                    <span className="text-gray-200">{line}</span>
                   )}
-                  {idx < heroData.title.length - 1 && <br />}
                 </span>
               ))}
             </h1>
