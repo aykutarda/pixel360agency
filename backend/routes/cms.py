@@ -273,7 +273,8 @@ async def update_blog_post(post_id: str, post: BlogPostCreate):
             await db.redirects.insert_one(redirect.dict())
     
     update_data = post.dict()
-    update_data["updated_at"] = datetime.utcnow()
+    update_data["updated_at"] = datetime.now(timezone.utc)
+    update_data["last_change_summary"] = generate_change_summary(existing, update_data)
     
     await db.blog_posts.update_one({"id": post_id}, {"$set": update_data})
     updated = await db.blog_posts.find_one({"id": post_id})
