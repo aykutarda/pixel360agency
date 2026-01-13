@@ -135,6 +135,14 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 | GET | `/api/site/sections/{key}` | Get specific section |
 | PUT | `/api/site/sections/{key}` | Update section (auth required) |
 
+### Site Settings (NEW)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/settings/status` | Get read-only mode status (public) |
+| GET | `/api/settings/settings` | Get full settings (auth) |
+| PUT | `/api/settings/settings` | Update settings (auth) |
+| POST | `/api/settings/toggle-read-only` | Quick toggle (auth) |
+
 ### CMS Endpoints
 | Method | Endpoint | Description |
 |--------|----------|-------------|
