@@ -50,6 +50,7 @@ const BlogPage = () => {
   if (!post) {
     return (
       <div className="min-h-screen bg-dark flex items-center justify-center">
+        <SEOHead title="Sayfa Bulunamadı" robots="noindex,nofollow" />
         <div className="text-center">
           <h1 className="font-pixel text-white text-2xl mb-4">Sayfa Bulunamadı</h1>
           <Link to="/" className="text-accent hover:underline">Ana Sayfaya Dön</Link>
