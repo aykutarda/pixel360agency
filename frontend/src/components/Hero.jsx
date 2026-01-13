@@ -1,16 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Play, Sparkles, Brain, TrendingUp, Zap } from 'lucide-react';
-import { heroData, statsData, clientLogos, trustBadges } from '../data/mock';
 
 const Hero = () => {
   const [currentStat, setCurrentStat] = useState(0);
+  const [heroData, setHeroData] = useState(null);
+  const [statsData, setStatsData] = useState([]);
+  const [trustBadges, setTrustBadges] = useState([]);
+  const [clientLogos, setClientLogos] = useState([]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentStat((prev) => (prev + 1) % statsData.length);
-    }, 3000);
-    return () => clearInterval(interval);
+    loadSiteData();
   }, []);
+
+  useEffect(() => {
+    if (statsData.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentStat((prev) => (prev + 1) % statsData.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [statsData]);
+
+  const loadSiteData = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/site/sections`);
+      const data = await res.json();
+      setHeroData(data.hero);
+      setStatsData(data.stats?.items || []);
+      setTrustBadges(data.trust_badges?.partners || []);
+      setClientLogos(data.trust_badges?.client_logos || []);
+    } catch (error) {
+      console.error('Error loading site data:', error);
+      // Fallback data
+      setHeroData({
+        badge: 'AI-POWERED GROWTH AGENCY',
+        title: ['BÜYÜME', 'MÜHENDİSLERİ'],
+        subtitle: 'Sadece reklam yapmıyoruz. Büyüme üretiyoruz.',
+        description: 'Yapay zeka destekli stratejiler, veri odaklı kararlar ve yaratıcı mükemmellikle markaları ölçeklenebilir başarıya taşıyoruz.',
+        primary_cta: { text: 'BÜYÜME STRATEJİNİZİ KONUŞALIM', url: '#contact' },
+        secondary_cta: { text: 'BAŞARI HİKAYELERİ', url: '#portfolio' },
+        tertiary_cta: { text: 'ÜCRETSİZ AI ANALİZ', url: '#contact' }
+      });
+      setStatsData([
+        { number: '₺500M+', label: 'Yönetilen Bütçe' },
+        { number: '340%', label: 'Ortalama ROAS' },
+        { number: '150+', label: 'Büyüyen Marka' },
+        { number: '2.5x', label: 'Ort. Büyüme Oranı' }
+      ]);
+    }
+  };
 
   const scrollToContact = () => {
     document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
@@ -19,6 +57,10 @@ const Hero = () => {
   const scrollToPortfolio = () => {
     document.querySelector('#portfolio')?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  if (!heroData) {
+    return <section className="min-h-screen flex items-center justify-center bg-dark"><div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin" /></section>;
+  }
 
   return (
     <section className="min-h-screen flex flex-col justify-center relative overflow-hidden px-6 md:px-12 pt-24 pb-20">
