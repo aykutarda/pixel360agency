@@ -67,6 +67,7 @@ function App() {
               <Route path="/admin/services" element={<AdminRoute><ServicesListPage /></AdminRoute>} />
               <Route path="/admin/services/:id" element={<AdminRoute><ServiceEditPage /></AdminRoute>} />
               <Route path="/admin/blog" element={<AdminRoute><BlogListPage /></AdminRoute>} />
+              <Route path="/admin/blog/:id" element={<AdminRoute><BlogEditPage /></AdminRoute>} />
               <Route path="/admin/hubs" element={<AdminRoute><HubsListPage /></AdminRoute>} />
               <Route path="/admin/site-content" element={<AdminRoute><SiteContentPage /></AdminRoute>} />
               <Route path="/admin/measurement" element={<AdminRoute><MeasurementSettingsPage /></AdminRoute>} />
