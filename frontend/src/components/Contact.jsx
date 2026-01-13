@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Phone, Mail, MapPin, MessageCircle, CheckCircle, Zap, Brain, ArrowRight, Calendar, Download } from 'lucide-react';
+import { trackLeadFormSubmit, trackContactClick } from '../utils/measurement';
 
 const Contact = () => {
   const [data, setData] = useState(null);
@@ -37,12 +38,25 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Track lead form submission (PRIMARY CONVERSION)
+    trackLeadFormSubmit({
+      formId: 'contact_form',
+      leadType: 'general',
+      serviceName: null
+    });
+    
     setIsSubmitted(true);
     setTimeout(() => {
       setIsSubmitted(false);
       setFormData({ name: '', company: '', phone: '', email: '', service: '', budget: '', message: '' });
     }, 3000);
   };
+
+  // Contact click handlers
+  const handlePhoneClick = () => trackContactClick('phone');
+  const handleWhatsAppClick = () => trackContactClick('whatsapp');
+  const handleEmailClick = () => trackContactClick('email');
 
   if (!data || !footerData) return null;
 
