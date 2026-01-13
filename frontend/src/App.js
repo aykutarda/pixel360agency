@@ -7,6 +7,9 @@ import ServicePage from './pages/ServicePage';
 import BlogPage from './pages/BlogPage';
 import HubPage from './pages/HubPage';
 
+// Measurement & Tracking
+import GTMScript from './components/GTMScript';
+
 // Admin imports
 import { AuthProvider, useAuth } from './admin/AuthContext';
 import LoginPage from './admin/pages/LoginPage';
@@ -17,6 +20,7 @@ import ServiceEditPage from './admin/pages/ServiceEditPage';
 import BlogListPage from './admin/pages/BlogListPage';
 import HubsListPage from './admin/pages/HubsListPage';
 import SiteContentPage from './admin/pages/SiteContentPage';
+import MeasurementSettingsPage from './admin/pages/MeasurementSettingsPage';
 
 // Admin route wrapper
 const AdminRoute = ({ children }) => {
