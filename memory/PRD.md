@@ -65,7 +65,7 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 - 3 Services: Google Ads Yönetimi, Meta Ads Yönetimi, SEO Hizmeti
 - 6 Blog Posts: Various informational articles
 - 3 Hub Pages: Google Ads, Meta Ads, SEO topic centers
-- Site Sections: header, hero, stats, trust_badges, footer
+- Site Sections: header, hero, stats, trust_badges, why_us, ai_capabilities, framework, portfolio, testimonials, contact, footer (all 11 sections)
 
 ## Admin Panel Access
 - **URL**: `/admin`
