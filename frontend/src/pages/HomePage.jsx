@@ -3,6 +3,9 @@ import AnimatedBackground from '../components/AnimatedBackground';
 import GeometricShapes from '../components/GeometricShapes';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
+import WhyUs from '../components/WhyUs';
+import AICapabilities from '../components/AICapabilities';
+import Framework from '../components/Framework';
 import Services from '../components/Services';
 import Portfolio from '../components/Portfolio';
 import Testimonials from '../components/Testimonials';
@@ -22,6 +25,9 @@ const HomePage = () => {
       <div className="relative z-10">
         <Header />
         <Hero />
+        <WhyUs />
+        <AICapabilities />
+        <Framework />
         <Services />
         <Portfolio />
         <Testimonials />
