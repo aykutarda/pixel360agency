@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, Query
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from models import (
     Service, ServiceCreate,
     BlogPost, BlogPostCreate,
@@ -19,6 +19,27 @@ router = APIRouter()
 mongo_url = os.environ.get('MONGO_URL')
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ.get('DB_NAME', 'pixel360')]
+
+
+# ============================================
+# READ-ONLY MODE HELPER
+# ============================================
+
+async def check_publish_allowed(new_status: str, old_status: str = None):
+    """Check if publishing is allowed (not in read-only mode)"""
+    if new_status != "published":
+        return  # Only check when trying to publish
+    
+    if old_status == "published":
+        return  # Already published, no change
+    
+    settings = await db.site_settings.find_one({}, {"_id": 0})
+    if settings and settings.get("read_only_mode", False):
+        raise HTTPException(
+            status_code=403,
+            detail=settings.get("read_only_message", "Site bakım modunda. İçerik yayınlanamaz.")
+        )
+
 
 # ============================================
 # SERVICES CRUD
