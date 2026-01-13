@@ -57,6 +57,9 @@ DEFAULT_SECTIONS = {
         ]
     },
     "trust_badges": {
+        "section_title": "Büyüme Ortaklarımız",
+        "animation_speed": "slow",
+        "logo_size": "large",
         "partners": [
             {"name": "Google Partner", "type": "premier"},
             {"name": "Meta Business Partner", "type": "partner"},
