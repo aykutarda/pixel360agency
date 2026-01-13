@@ -77,6 +77,36 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
   - Form submit tracks `lead_form_submit`
   - Phone/WhatsApp/Email clicks track `contact_click`
 
+#### Phase 2.6: Admin Panel Enhancements (Complete ✅) - January 13, 2026
+- [x] **1️⃣ Content Intent Badges**
+  - Blog listesinde 🟢 Informational, 🟡 Commercial, 🔴 Transactional badge'leri
+  - Services listesinde kategori badge'leri (Performance, SEO, Creative, etc.)
+  - Her badge'de ilgili ikon ve renk kodlaması
+- [x] **2️⃣ Measurement Status Badges**
+  - Measurement sayfası üstünde 6 durum kartı (GTM, GA4, Google Ads, Meta Pixel, Clarity, Hotjar)
+  - Aktif/Pasif/Yapılandırılmadı durumları canlı olarak gösteriliyor
+  - Her kart için pulse animasyonu ve durum rengi
+- [x] **3️⃣ Read-Only Mode (Bakım Modu)**
+  - Sidebar'da toggle butonu
+  - Aktifken içerik yayınlanamaz (publish engellenir)
+  - Tüm sayfalarda kırmızı uyarı banner'ı
+  - Backend CMS routes read-only check ekli
+- [x] **4️⃣ Publish Guard (SEO Validation)**
+  - `PublishGuard.jsx` - Yayınlama öncesi SEO kontrol modalı
+  - Required alanlar: SEO Title (30-60 char), Description (120-160 char), Slug, Focus Keyword
+  - Hatalar ve uyarılar ayrı gösteriliyor
+  - "Uyarılara rağmen yayınla" seçeneği
+- [x] **5️⃣ Change Log (Light)**
+  - `ChangeLog.jsx` - Audit trail component'ı
+  - Son güncelleme tarihi ve kişisi
+  - Değişen alanların özeti (last_change_summary)
+  - Backend'de otomatik change summary oluşturma
+- [x] **6️⃣ Internal Link Health**
+  - `InternalLinkHealth.jsx` - Blog için link sağlık paneli
+  - Hub ve Service bağlantı durumu
+  - SEO uyarıları (hub/service bağlı değilse)
+  - Hızlı bağlantı dropdown'ları
+
 ### Database Content
 - 3 Services: Google Ads Yönetimi, Meta Ads Yönetimi, SEO Hizmeti
 - 6 Blog Posts: Various informational articles
