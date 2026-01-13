@@ -1,5 +1,5 @@
 /* Pixel Font - Press Start 2P or similar */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&family=VT323&display=swap');
 
 /* Custom Pixel Font Face */
 @font-face {
@@ -27,9 +27,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Pixel Font Class */
+/* Pixel Font Class - VT323 supports Turkish characters */
 .font-pixel {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'VT323', 'Press Start 2P', monospace;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
