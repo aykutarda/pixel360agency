@@ -252,13 +252,46 @@ const StatsEditor = ({ data, onChange }) => {
 };
 
 const TrustBadgesEditor = ({ data, onChange }) => {
+  const [uploading, setUploading] = useState(null);
+  
   const updatePartner = (idx, field, value) => { const p = [...data.partners]; p[idx][field] = value; onChange({ ...data, partners: p }); };
   const addPartner = () => onChange({ ...data, partners: [...data.partners, { name: '', type: 'partner' }] });
   const removePartner = (idx) => onChange({ ...data, partners: data.partners.filter((_, i) => i !== idx) });
 
   const updateLogo = (idx, field, value) => { const l = [...data.client_logos]; l[idx][field] = value; onChange({ ...data, client_logos: l }); };
-  const addLogo = () => onChange({ ...data, client_logos: [...data.client_logos, { name: '', logo: '' }] });
+  const addLogo = () => onChange({ ...data, client_logos: [...data.client_logos, { name: '', logo: '', logo_url: '' }] });
   const removeLogo = (idx) => onChange({ ...data, client_logos: data.client_logos.filter((_, i) => i !== idx) });
+
+  const handleLogoUpload = async (idx, file) => {
+    if (!file) return;
+    
+    const brandName = data.client_logos[idx]?.name || `brand-${idx}`;
+    setUploading(idx);
+    
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('brand_name', brandName);
+      
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/upload/logo`, {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+      
+      const result = await response.json();
+      updateLogo(idx, 'logo_url', result.logo_url);
+      toast.success('Logo yüklendi');
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast.error('Logo yüklenemedi');
+    } finally {
+      setUploading(null);
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -275,13 +308,74 @@ const TrustBadgesEditor = ({ data, onChange }) => {
         ))}
       </div>
       <div>
-        <div className="flex justify-between mb-3"><span className="text-white font-medium">Müşteri Logoları</span><AddButton onClick={addLogo} /></div>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="flex justify-between mb-3">
+          <span className="text-white font-medium">Müşteri Logoları</span>
+          <AddButton onClick={addLogo} />
+        </div>
+        <p className="text-gray-500 text-xs mb-4">Logo görseli yükleyebilir veya kısa kod girebilirsiniz. Görsel yüklenirse öncelikli olarak gösterilir.</p>
+        <div className="grid grid-cols-2 gap-4">
           {data.client_logos?.map((c, idx) => (
-            <div key={idx} className="flex gap-2">
-              <input type="text" value={c.name} onChange={(e) => updateLogo(idx, 'name', e.target.value)} placeholder="Şirket" className="flex-1 bg-[#0a0a0a] border border-[#333] text-white px-3 py-2 text-sm" />
-              <input type="text" value={c.logo} onChange={(e) => updateLogo(idx, 'logo', e.target.value)} placeholder="Kısa" className="w-16 bg-[#0a0a0a] border border-[#333] text-white px-3 py-2 text-sm text-center" />
-              <RemoveButton onClick={() => removeLogo(idx)} />
+            <div key={idx} className="bg-[#0a0a0a] border border-[#222] p-4 space-y-3">
+              {/* Preview */}
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 border border-[#333] flex items-center justify-center bg-[#111] overflow-hidden">
+                  {c.logo_url ? (
+                    <img src={c.logo_url} alt={c.name} className="max-w-full max-h-full object-contain" />
+                  ) : (
+                    <span className="text-[#c8ff00] font-bold text-lg">{c.logo || '?'}</span>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <input 
+                    type="text" 
+                    value={c.name} 
+                    onChange={(e) => updateLogo(idx, 'name', e.target.value)} 
+                    placeholder="Marka Adı" 
+                    className="w-full bg-transparent border border-[#333] text-white px-3 py-2 text-sm mb-2" 
+                  />
+                  <input 
+                    type="text" 
+                    value={c.logo || ''} 
+                    onChange={(e) => updateLogo(idx, 'logo', e.target.value)} 
+                    placeholder="Kısa Kod (TC, M+)" 
+                    className="w-full bg-transparent border border-[#333] text-gray-400 px-3 py-2 text-sm" 
+                  />
+                </div>
+              </div>
+              
+              {/* Upload Section */}
+              <div className="flex items-center gap-2">
+                <label className="flex-1 cursor-pointer">
+                  <div className={`border border-dashed border-[#444] hover:border-[#c8ff00] px-3 py-2 text-center text-xs transition-colors ${uploading === idx ? 'opacity-50' : ''}`}>
+                    {uploading === idx ? (
+                      <span className="text-gray-400">Yükleniyor...</span>
+                    ) : (
+                      <span className="text-gray-400">📁 Logo Görseli Yükle</span>
+                    )}
+                  </div>
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={(e) => handleLogoUpload(idx, e.target.files[0])}
+                    disabled={uploading === idx}
+                    className="hidden" 
+                  />
+                </label>
+                {c.logo_url && (
+                  <button 
+                    onClick={() => updateLogo(idx, 'logo_url', '')} 
+                    className="text-red-400 hover:text-red-300 text-xs px-2 py-1"
+                  >
+                    Görseli Kaldır
+                  </button>
+                )}
+                <RemoveButton onClick={() => removeLogo(idx)} />
+              </div>
+              
+              {/* URL Display */}
+              {c.logo_url && (
+                <p className="text-gray-500 text-xs truncate">URL: {c.logo_url}</p>
+              )}
             </div>
           ))}
         </div>
