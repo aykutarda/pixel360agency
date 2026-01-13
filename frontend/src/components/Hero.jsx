@@ -7,6 +7,11 @@ const Hero = () => {
   const [statsData, setStatsData] = useState([]);
   const [trustBadges, setTrustBadges] = useState([]);
   const [clientLogos, setClientLogos] = useState([]);
+  const [logoSettings, setLogoSettings] = useState({
+    section_title: 'Büyüme Ortaklarımız',
+    animation_speed: 'slow',
+    logo_size: 'large'
+  });
 
   useEffect(() => {
     loadSiteData();
@@ -29,6 +34,12 @@ const Hero = () => {
       setStatsData(data.stats?.items || []);
       setTrustBadges(data.trust_badges?.partners || []);
       setClientLogos(data.trust_badges?.client_logos || []);
+      // Load logo section settings
+      setLogoSettings({
+        section_title: data.trust_badges?.section_title || 'Büyüme Ortaklarımız',
+        animation_speed: data.trust_badges?.animation_speed || 'slow',
+        logo_size: data.trust_badges?.logo_size || 'large'
+      });
     } catch (error) {
       console.error('Error loading site data:', error);
       // Fallback data
@@ -47,6 +58,24 @@ const Hero = () => {
         { number: '150+', label: 'Büyüyen Marka' },
         { number: '2.5x', label: 'Ort. Büyüme Oranı' }
       ]);
+    }
+  };
+
+  // Get animation class based on speed setting
+  const getAnimationClass = () => {
+    switch(logoSettings.animation_speed) {
+      case 'fast': return 'animate-marquee-fast';
+      case 'slow': return 'animate-marquee-slow';
+      default: return 'animate-marquee';
+    }
+  };
+
+  // Get logo size classes based on size setting
+  const getLogoSizeClasses = () => {
+    switch(logoSettings.logo_size) {
+      case 'small': return 'w-32 md:w-40 lg:w-44 h-16 md:h-20 lg:h-22';
+      case 'large': return 'w-44 md:w-52 lg:w-56 h-20 md:h-24 lg:h-28';
+      default: return 'w-40 md:w-48 lg:w-52 h-18 md:h-22 lg:h-26'; // medium
     }
   };
 
