@@ -1,18 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, MessageCircle, Brain, Zap } from 'lucide-react';
-import { navLinks, siteData } from '../data/mock';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [headerData, setHeaderData] = useState(null);
+  const [footerData, setFooterData] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
+    
+    // Load header and footer data for WhatsApp
+    loadSiteData();
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const loadSiteData = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/site/sections`);
+      const data = await res.json();
+      setHeaderData(data.header);
+      setFooterData(data.footer);
+    } catch (error) {
+      console.error('Error loading site data:', error);
+    }
+  };
 
   const scrollToSection = (path) => {
     setIsMenuOpen(false);
@@ -21,14 +37,29 @@ const Header = () => {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
+    } else if (path === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
+
+  // Fallback data
+  const navLinks = headerData?.nav_links || [
+    { name: 'ANA SAYFA', path: '/' },
+    { name: 'HİZMETLER', path: '#services' },
+    { name: 'İLETİŞİM', path: '#contact' }
+  ];
+  
+  const phone = headerData?.phone || footerData?.contact?.phone || '+90 532 123 45 67';
+  const whatsapp = footerData?.contact?.whatsapp || '905321234567';
+  const ctaText = headerData?.cta_button?.text || 'STRATEJİ GÖRÜŞMESİ';
+  const ctaUrl = headerData?.cta_button?.url || '#contact';
+  const logo = headerData?.logo || 'PIXEL360.';
 
   return (
     <>
       <header className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex justify-between items-center transition-all duration-300 ${isScrolled ? 'bg-dark/95 backdrop-blur-md shadow-lg border-b border-dark-lighter/50' : ''}`}>
         <a href="/" className="font-pixel text-white text-base md:text-lg tracking-wider hover:text-accent transition-colors flex items-center gap-2">
-          <span className="text-accent">P</span>IXEL360<span className="text-accent">.</span>
+          <span className="text-accent">{logo.charAt(0)}</span>{logo.slice(1)}
         </a>
         
         {/* Desktop Navigation */}
@@ -47,14 +78,14 @@ const Header = () => {
         {/* Desktop CTA Buttons */}
         <div className="hidden lg:flex items-center gap-3">
           <a 
-            href={`tel:${siteData.phone}`}
+            href={`tel:${phone.replace(/\s/g, '')}`}
             className="flex items-center gap-2 text-gray-400 text-sm font-mono hover:text-accent transition-colors"
           >
             <Phone className="w-4 h-4" />
-            <span className="hidden xl:inline">{siteData.phone}</span>
+            <span className="hidden xl:inline">{phone}</span>
           </a>
           <a 
-            href={`https://wa.me/${siteData.whatsapp}`}
+            href={`https://wa.me/${whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 bg-green-500/20 text-green-500 text-sm font-mono px-3 py-2 border border-green-500/30 hover:bg-green-500 hover:text-white transition-all"
@@ -62,11 +93,11 @@ const Header = () => {
             <MessageCircle className="w-4 h-4" />
           </a>
           <button 
-            onClick={() => scrollToSection('#contact')}
+            onClick={() => scrollToSection(ctaUrl)}
             className="flex items-center gap-2 bg-accent text-dark text-sm font-mono font-bold px-5 py-2 hover:bg-white transition-colors"
           >
             <Brain className="w-4 h-4" />
-            <span>STRATEJİ GÖRÜŞMESİ</span>
+            <span>{ctaText}</span>
           </button>
         </div>
 
@@ -82,7 +113,7 @@ const Header = () => {
       <div className={`fixed inset-0 bg-dark z-[100] transition-transform duration-500 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="px-6 py-4 flex justify-between items-center border-b border-dark-lighter">
           <span className="font-pixel text-white text-lg tracking-wider">
-            <span className="text-accent">P</span>IXEL360<span className="text-accent">.</span>
+            <span className="text-accent">{logo.charAt(0)}</span>{logo.slice(1)}
           </span>
           <button 
             onClick={() => setIsMenuOpen(false)}
@@ -106,7 +137,7 @@ const Header = () => {
           {/* Mobile CTAs */}
           <div className="flex flex-col gap-4 mt-8 w-full max-w-xs">
             <a 
-              href={`https://wa.me/${siteData.whatsapp}`}
+              href={`https://wa.me/${whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 bg-green-500 text-white font-mono px-8 py-4"
@@ -115,11 +146,11 @@ const Header = () => {
               WhatsApp
             </a>
             <button 
-              onClick={() => scrollToSection('#contact')}
+              onClick={() => scrollToSection(ctaUrl)}
               className="flex items-center justify-center gap-2 bg-accent text-dark font-mono font-bold px-8 py-4"
             >
               <Brain className="w-5 h-5" />
-              Strateji Görüşmesi
+              {ctaText}
             </button>
           </div>
         </nav>
@@ -127,7 +158,7 @@ const Header = () => {
 
       {/* Floating WhatsApp Button */}
       <a 
-        href={`https://wa.me/${siteData.whatsapp}?text=Merhaba, büyüme stratejisi hakkında görüşmek istiyorum.`}
+        href={`https://wa.me/${whatsapp}?text=Merhaba, büyüme stratejisi hakkında görüşmek istiyorum.`}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 flex items-center justify-center shadow-lg hover:bg-green-600 hover:scale-110 transition-all group"
