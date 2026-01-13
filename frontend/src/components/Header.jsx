@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, MessageCircle, Brain, Zap } from 'lucide-react';
+import { Menu, X, Phone, MessageCircle, Brain, ChevronRight } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,6 +17,15 @@ const Header = () => {
     loadSiteData();
     
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close menu on escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') setIsMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
   }, []);
 
   const loadSiteData = async () => {
@@ -58,102 +67,102 @@ const Header = () => {
   return (
     <>
       <header className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex justify-between items-center transition-all duration-300 ${isScrolled ? 'bg-dark/95 backdrop-blur-md shadow-lg border-b border-dark-lighter/50' : ''}`}>
-        <a href="/" className="font-pixel text-white text-base md:text-lg tracking-wider hover:text-accent transition-colors flex items-center gap-2">
+        {/* Logo */}
+        <a href="/" className="font-pixel text-white text-base md:text-lg tracking-wider hover:text-accent transition-colors">
           <span className="text-accent">{logo.charAt(0)}</span>{logo.slice(1)}
         </a>
         
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link, index) => (
-            <button
-              key={index}
-              onClick={() => scrollToSection(link.path)}
-              className="text-gray-400 font-mono text-sm hover:text-accent transition-colors"
-            >
-              {link.name}
-            </button>
-          ))}
-        </nav>
-        
-        {/* Desktop CTA Buttons */}
-        <div className="hidden lg:flex items-center gap-3">
-          <a 
-            href={`tel:${phone.replace(/\s/g, '')}`}
-            className="flex items-center gap-2 text-gray-400 text-sm font-mono hover:text-accent transition-colors"
-          >
-            <Phone className="w-4 h-4" />
-            <span className="hidden xl:inline">{phone}</span>
-          </a>
-          <a 
-            href={`https://wa.me/${whatsapp}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-green-500/20 text-green-500 text-sm font-mono px-3 py-2 border border-green-500/30 hover:bg-green-500 hover:text-white transition-all"
-          >
-            <MessageCircle className="w-4 h-4" />
-          </a>
-          <button 
-            onClick={() => scrollToSection(ctaUrl)}
-            className="flex items-center gap-2 bg-accent text-dark text-sm font-mono font-bold px-5 py-2 hover:bg-white transition-colors"
-          >
-            <Brain className="w-4 h-4" />
-            <span>{ctaText}</span>
-          </button>
-        </div>
-
+        {/* Hamburger Menu Button - Always Visible */}
         <button 
           onClick={() => setIsMenuOpen(true)}
-          className="lg:hidden w-12 h-12 bg-dark-lighter flex items-center justify-center hover:bg-accent hover:text-dark transition-colors"
+          className="w-12 h-12 bg-dark-lighter/80 backdrop-blur-sm flex items-center justify-center hover:bg-accent hover:text-dark transition-colors border border-dark-lighter"
+          aria-label="Menüyü Aç"
         >
           <Menu className="w-5 h-5" />
         </button>
       </header>
 
-      {/* Mobile Menu */}
-      <div className={`fixed inset-0 bg-dark z-[100] transition-transform duration-500 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="px-6 py-4 flex justify-between items-center border-b border-dark-lighter">
-          <span className="font-pixel text-white text-lg tracking-wider">
+      {/* Fullscreen Menu Overlay */}
+      <div 
+        className={`fixed inset-0 bg-dark/95 backdrop-blur-md z-[100] transition-all duration-500 ${
+          isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        {/* Menu Header */}
+        <div className="px-6 md:px-12 py-4 flex justify-between items-center border-b border-dark-lighter/50">
+          <span className="font-pixel text-white text-base md:text-lg tracking-wider">
             <span className="text-accent">{logo.charAt(0)}</span>{logo.slice(1)}
           </span>
           <button 
             onClick={() => setIsMenuOpen(false)}
-            className="w-12 h-12 bg-dark-lighter flex items-center justify-center hover:bg-accent hover:text-dark transition-colors"
+            className="w-12 h-12 bg-dark-lighter flex items-center justify-center hover:bg-accent hover:text-dark transition-colors border border-dark-lighter"
+            aria-label="Menüyü Kapat"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
         
-        <nav className="flex flex-col items-center justify-center h-[calc(100vh-200px)] gap-6">
-          {navLinks.map((link, index) => (
-            <button
-              key={index}
-              onClick={() => scrollToSection(link.path)}
-              className="text-white font-pixel text-xl tracking-wider hover:text-accent transition-colors"
+        {/* Menu Content */}
+        <div className="h-[calc(100vh-80px)] flex flex-col md:flex-row">
+          {/* Navigation Links */}
+          <nav className="flex-1 flex flex-col justify-center px-6 md:px-12 lg:px-24">
+            {navLinks.map((link, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToSection(link.path)}
+                className="group flex items-center justify-between py-4 md:py-6 border-b border-dark-lighter/30 hover:border-accent/50 transition-colors"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <span className="font-pixel text-white text-lg md:text-2xl lg:text-3xl tracking-wider group-hover:text-accent transition-colors">
+                  {link.name}
+                </span>
+                <ChevronRight className="w-6 h-6 text-gray-600 group-hover:text-accent group-hover:translate-x-2 transition-all" />
+              </button>
+            ))}
+          </nav>
+
+          {/* Contact Info & CTAs */}
+          <div className="md:w-80 lg:w-96 bg-dark-light/30 p-6 md:p-8 flex flex-col justify-center gap-6">
+            {/* Phone */}
+            <a 
+              href={`tel:${phone.replace(/\s/g, '')}`}
+              className="flex items-center gap-4 text-gray-400 hover:text-accent transition-colors group"
             >
-              {link.name}
-            </button>
-          ))}
-          
-          {/* Mobile CTAs */}
-          <div className="flex flex-col gap-4 mt-8 w-full max-w-xs">
+              <div className="w-12 h-12 bg-dark-lighter flex items-center justify-center group-hover:bg-accent group-hover:text-dark transition-colors">
+                <Phone className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-xs font-mono text-gray-500 block">TELEFON</span>
+                <span className="font-mono text-sm">{phone}</span>
+              </div>
+            </a>
+
+            {/* WhatsApp */}
             <a 
               href={`https://wa.me/${whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 bg-green-500 text-white font-mono px-8 py-4"
+              className="flex items-center gap-4 text-gray-400 hover:text-green-500 transition-colors group"
             >
-              <MessageCircle className="w-5 h-5" />
-              WhatsApp
+              <div className="w-12 h-12 bg-green-500/20 border border-green-500/30 flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-colors">
+                <MessageCircle className="w-5 h-5 text-green-500 group-hover:text-white" />
+              </div>
+              <div>
+                <span className="text-xs font-mono text-gray-500 block">WHATSAPP</span>
+                <span className="font-mono text-sm">Hemen Yazın</span>
+              </div>
             </a>
+
+            {/* Primary CTA */}
             <button 
               onClick={() => scrollToSection(ctaUrl)}
-              className="flex items-center justify-center gap-2 bg-accent text-dark font-mono font-bold px-8 py-4"
+              className="flex items-center justify-center gap-3 bg-accent text-dark font-mono font-bold px-6 py-4 hover:bg-white transition-colors mt-4"
             >
               <Brain className="w-5 h-5" />
               {ctaText}
             </button>
           </div>
-        </nav>
+        </div>
       </div>
 
       {/* Floating WhatsApp Button */}
