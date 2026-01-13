@@ -11,7 +11,7 @@ import uuid
 from datetime import datetime, timezone
 
 # Import CMS routes
-from routes import cms, seo, auth, seed
+from routes import cms, seo, auth, seed, site_sections
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -76,6 +76,7 @@ async def get_status_checks():
 api_router.include_router(cms.router, prefix="/cms", tags=["CMS"])
 api_router.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 api_router.include_router(seed.router, prefix="/seed", tags=["Seed Data"])
+api_router.include_router(site_sections.router, prefix="/site", tags=["Site Sections"])
 
 # Include SEO routes (sitemap, robots.txt)
 app.include_router(seo.router, tags=["SEO"])
