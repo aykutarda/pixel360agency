@@ -91,20 +91,21 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
   - Aktifken içerik yayınlanamaz (publish engellenir)
   - Tüm sayfalarda kırmızı uyarı banner'ı
   - Backend CMS routes read-only check ekli
-- [x] **4️⃣ Publish Guard (SEO Validation)**
-  - `PublishGuard.jsx` - Yayınlama öncesi SEO kontrol modalı
+- [x] **4️⃣ Publish Guard (SEO Validation)** - ENTEGRE EDİLDİ
+  - ServiceEditPage ve BlogEditPage'e entegre
+  - Yayınlama öncesi SEO kontrol modalı
   - Required alanlar: SEO Title (30-60 char), Description (120-160 char), Slug, Focus Keyword
-  - Hatalar ve uyarılar ayrı gösteriliyor
-  - "Uyarılara rağmen yayınla" seçeneği
-- [x] **5️⃣ Change Log (Light)**
-  - `ChangeLog.jsx` - Audit trail component'ı
-  - Son güncelleme tarihi ve kişisi
+  - Hatalar kırmızı, uyarılar sarı renkte ayrı gösteriliyor
+  - SEO sorunları edit sayfasında da kırmızı banner olarak gösteriliyor
+- [x] **5️⃣ Change Log (Light)** - ENTEGRE EDİLDİ
+  - ServiceEditPage ve BlogEditPage sidebar'ına entegre
+  - Son güncelleme tarihi, güncelleyen kişi
+  - Oluşturma tarihi ve kişisi
   - Değişen alanların özeti (last_change_summary)
-  - Backend'de otomatik change summary oluşturma
-- [x] **6️⃣ Internal Link Health**
-  - `InternalLinkHealth.jsx` - Blog için link sağlık paneli
-  - Hub ve Service bağlantı durumu
-  - SEO uyarıları (hub/service bağlı değilse)
+- [x] **6️⃣ Internal Link Health** - ENTEGRE EDİLDİ
+  - BlogEditPage sidebar'ına entegre
+  - Hub ve Service bağlantı durumu ✓ / ⚠️
+  - SEO sağlık skoru (%)
   - Hızlı bağlantı dropdown'ları
 
 ### Database Content
