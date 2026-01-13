@@ -69,7 +69,7 @@ const Header = () => {
       <header className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex justify-between items-center transition-all duration-300 ${isScrolled ? 'bg-dark/95 backdrop-blur-md shadow-lg border-b border-dark-lighter/50' : ''}`}>
         {/* Logo */}
         <a href="/" className="font-pixel text-white text-base md:text-lg tracking-wider hover:text-accent transition-colors">
-          <span className="text-accent">{logo.charAt(0)}</span>{logo.slice(1)}
+          <span className="text-accent glitch" data-text={logo.charAt(0)}>{logo.charAt(0)}</span>{logo.slice(1)}
         </a>
         
         {/* Hamburger Menu Button - Always Visible */}
