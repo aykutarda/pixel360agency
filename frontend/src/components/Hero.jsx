@@ -97,9 +97,16 @@ const Hero = () => {
             
             {/* Main Title */}
             <h1 className="font-pixel text-white text-[32px] sm:text-[42px] md:text-[56px] lg:text-[72px] leading-[1.05] tracking-tight mb-4">
-              <span className="text-accent glitch" data-text="B">B</span>ÜYÜME
-              <br />
-              <span className="bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">MÜHENDİSLERİ</span>
+              {heroData.title?.map((line, idx) => (
+                <span key={idx}>
+                  {idx === 0 ? (
+                    <><span className="text-accent glitch" data-text={line.charAt(0)}>{line.charAt(0)}</span>{line.slice(1)}</>
+                  ) : (
+                    <span className="bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">{line}</span>
+                  )}
+                  {idx < heroData.title.length - 1 && <br />}
+                </span>
+              ))}
             </h1>
 
             {/* Subtitle */}
@@ -120,7 +127,7 @@ const Hero = () => {
               >
                 <span className="relative z-10 flex items-center gap-3">
                   <Zap className="w-5 h-5" />
-                  {heroData.cta}
+                  {heroData.primary_cta?.text}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
@@ -130,7 +137,7 @@ const Hero = () => {
                 className="group flex items-center justify-center gap-3 border-2 border-white/30 text-white font-mono px-8 py-4 hover:bg-white hover:text-dark transition-all relative overflow-hidden"
               >
                 <Play className="w-5 h-5" />
-                {heroData.ctaSecondary}
+                {heroData.secondary_cta?.text}
               </button>
             </div>
 
@@ -144,8 +151,8 @@ const Hero = () => {
                   <Brain className="w-5 h-5 group-hover:text-dark transition-colors" />
                 </div>
                 <div className="text-left">
-                  <span className="font-mono text-sm block">{heroData.ctaTertiary}</span>
-                  <span className="text-xs text-gray-500">Markanız için özel rapor</span>
+                  <span className="font-mono text-sm block">{heroData.tertiary_cta?.text}</span>
+                  <span className="text-xs text-gray-500">{heroData.tertiary_cta?.description || 'Markanız için özel rapor'}</span>
                 </div>
               </button>
             </div>
