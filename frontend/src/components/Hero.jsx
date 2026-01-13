@@ -73,9 +73,9 @@ const Hero = () => {
   // Get logo size classes based on size setting
   const getLogoSizeClasses = () => {
     switch(logoSettings.logo_size) {
-      case 'small': return 'w-32 md:w-40 lg:w-44 h-16 md:h-20 lg:h-22';
-      case 'large': return 'w-44 md:w-52 lg:w-56 h-20 md:h-24 lg:h-28';
-      default: return 'w-40 md:w-48 lg:w-52 h-18 md:h-22 lg:h-26'; // medium
+      case 'small': return 'w-36 md:w-44 lg:w-48 h-16 md:h-20 lg:h-24';
+      case 'large': return 'w-48 md:w-56 lg:w-64 h-20 md:h-26 lg:h-32';
+      default: return 'w-44 md:w-52 lg:w-56 h-18 md:h-24 lg:h-28'; // medium
     }
   };
 
