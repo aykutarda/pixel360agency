@@ -188,9 +188,7 @@ const ServicesListPage = () => {
                       <p className="text-gray-500 text-sm truncate max-w-xs">{service.hero_summary?.slice(0, 60)}...</p>
                     </td>
                     <td className="px-4 py-4">
-                      <span className="text-xs px-2 py-1 bg-blue-400/10 text-blue-400 uppercase">
-                        {service.category}
-                      </span>
+                      <CategoryBadge category={service.category} />
                     </td>
                     <td className="px-4 py-4">
                       <span className={`flex items-center gap-1 text-xs ${
