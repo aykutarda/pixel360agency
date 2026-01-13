@@ -250,6 +250,9 @@ async def delete_blog_post(post_id: str):
 @router.post("/hubs", response_model=HubPage)
 async def create_hub(hub: HubPageCreate):
     """Create a new hub page"""
+    # Check read-only mode if trying to publish
+    await check_publish_allowed(hub.status)
+    
     existing = await db.hubs.find_one({"seo_slug": hub.seo_slug})
     if existing:
         raise HTTPException(status_code=400, detail="Slug already exists")
