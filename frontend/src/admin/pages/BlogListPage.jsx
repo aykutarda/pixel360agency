@@ -10,8 +10,46 @@ import {
   Eye,
   AlertCircle,
   CheckCircle,
-  Calendar
+  Calendar,
+  Info,
+  ShoppingCart,
+  CreditCard
 } from 'lucide-react';
+
+// Intent Badge Component
+const IntentBadge = ({ intent }) => {
+  const config = {
+    informational: { 
+      label: 'Informational', 
+      color: 'bg-green-500/20 text-green-400 border-green-500/30',
+      icon: Info
+    },
+    commercial: { 
+      label: 'Commercial', 
+      color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+      icon: ShoppingCart
+    },
+    transactional: { 
+      label: 'Transactional', 
+      color: 'bg-red-500/20 text-red-400 border-red-500/30',
+      icon: CreditCard
+    },
+    navigational: { 
+      label: 'Navigational', 
+      color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+      icon: Eye
+    }
+  };
+  
+  const { label, color, icon: Icon } = config[intent] || config.informational;
+  
+  return (
+    <span className={`inline-flex items-center gap-1 text-xs px-2 py-1 border ${color}`}>
+      <Icon className="w-3 h-3" />
+      {label}
+    </span>
+  );
+};
 
 const BlogListPage = () => {
   const [posts, setPosts] = useState([]);
