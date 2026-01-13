@@ -254,6 +254,9 @@ const StatsEditor = ({ data, onChange }) => {
 const TrustBadgesEditor = ({ data, onChange }) => {
   const [uploading, setUploading] = useState(null);
   
+  // Settings update helpers
+  const updateSetting = (field, value) => onChange({ ...data, [field]: value });
+  
   const updatePartner = (idx, field, value) => { const p = [...data.partners]; p[idx][field] = value; onChange({ ...data, partners: p }); };
   const addPartner = () => onChange({ ...data, partners: [...data.partners, { name: '', type: 'partner' }] });
   const removePartner = (idx) => onChange({ ...data, partners: data.partners.filter((_, i) => i !== idx) });
@@ -295,6 +298,50 @@ const TrustBadgesEditor = ({ data, onChange }) => {
 
   return (
     <div className="space-y-8">
+      {/* Section Settings */}
+      <div className="bg-[#0a0a0a] border border-[#333] p-4 rounded-lg">
+        <h4 className="text-white font-medium mb-4 flex items-center gap-2">
+          <Info className="w-4 h-4 text-[#c8ff00]" />
+          Bölüm Ayarları
+        </h4>
+        <div className="grid grid-cols-3 gap-4">
+          <div>
+            <label className="block text-gray-400 text-xs mb-2">Bölüm Başlığı</label>
+            <input 
+              type="text" 
+              value={data.section_title || 'Büyüme Ortaklarımız'} 
+              onChange={(e) => updateSetting('section_title', e.target.value)} 
+              placeholder="Büyüme Ortaklarımız" 
+              className="w-full bg-[#111] border border-[#333] text-white px-3 py-2 text-sm" 
+            />
+          </div>
+          <div>
+            <label className="block text-gray-400 text-xs mb-2">Animasyon Hızı</label>
+            <select 
+              value={data.animation_speed || 'slow'} 
+              onChange={(e) => updateSetting('animation_speed', e.target.value)} 
+              className="w-full bg-[#111] border border-[#333] text-white px-3 py-2 text-sm"
+            >
+              <option value="slow">Yavaş (45s)</option>
+              <option value="normal">Normal (30s)</option>
+              <option value="fast">Hızlı (20s)</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-gray-400 text-xs mb-2">Logo Boyutu</label>
+            <select 
+              value={data.logo_size || 'large'} 
+              onChange={(e) => updateSetting('logo_size', e.target.value)} 
+              className="w-full bg-[#111] border border-[#333] text-white px-3 py-2 text-sm"
+            >
+              <option value="small">Küçük</option>
+              <option value="medium">Orta</option>
+              <option value="large">Büyük</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <div>
         <div className="flex justify-between mb-3"><span className="text-white font-medium">Partner Rozetleri</span><AddButton onClick={addPartner} /></div>
         {data.partners?.map((p, idx) => (
