@@ -206,6 +206,9 @@ async def update_blog_post(post_id: str, post: BlogPostCreate):
     if not existing:
         raise HTTPException(status_code=404, detail="Blog post not found")
     
+    # Check read-only mode if trying to publish
+    await check_publish_allowed(post.status, existing.get("status"))
+    
     old_slug = existing.get("seo_slug")
     new_slug = post.seo_slug
     old_status = existing.get("status")
