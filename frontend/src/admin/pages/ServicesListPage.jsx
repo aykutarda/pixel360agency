@@ -10,8 +10,63 @@ import {
   Eye,
   MoreVertical,
   AlertCircle,
-  CheckCircle
+  CheckCircle,
+  TrendingUp,
+  Palette,
+  Target,
+  Search as SearchIcon,
+  Users,
+  Video
 } from 'lucide-react';
+
+// Category Badge Component
+const CategoryBadge = ({ category }) => {
+  const config = {
+    performance: { 
+      label: 'Performance', 
+      color: 'bg-red-500/20 text-red-400 border-red-500/30',
+      icon: TrendingUp
+    },
+    creative: { 
+      label: 'Creative', 
+      color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+      icon: Palette
+    },
+    strategy: { 
+      label: 'Strategy', 
+      color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+      icon: Target
+    },
+    seo: { 
+      label: 'SEO', 
+      color: 'bg-green-500/20 text-green-400 border-green-500/30',
+      icon: SearchIcon
+    },
+    social: { 
+      label: 'Social', 
+      color: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
+      icon: Users
+    },
+    production: { 
+      label: 'Production', 
+      color: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+      icon: Video
+    }
+  };
+  
+  const { label, color, icon: Icon } = config[category] || { 
+    label: category || 'Other', 
+    color: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+    icon: AlertCircle
+  };
+  
+  return (
+    <span className={`inline-flex items-center gap-1 text-xs px-2 py-1 border ${color}`}>
+      <Icon className="w-3 h-3" />
+      {label}
+    </span>
+  );
+};
 
 const ServicesListPage = () => {
   const [services, setServices] = useState([]);
