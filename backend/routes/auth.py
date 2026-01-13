@@ -140,8 +140,6 @@ class LoginRequest(BaseModel):
     email: str
     password: str
 
-from pydantic import BaseModel
-
 @router.post("/login", response_model=Token)
 async def login(login_data: LoginRequest, request: Request):
     """Login and get access token with rate limiting"""
