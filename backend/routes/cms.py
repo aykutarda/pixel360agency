@@ -100,6 +100,9 @@ async def update_service(service_id: str, service: ServiceCreate):
     if not existing:
         raise HTTPException(status_code=404, detail="Service not found")
     
+    # Check read-only mode if trying to publish
+    await check_publish_allowed(service.status, existing.get("status"))
+    
     # Check if slug changed and handle redirect
     old_slug = existing.get("seo_slug")
     new_slug = service.seo_slug
