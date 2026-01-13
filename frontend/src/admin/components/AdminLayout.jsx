@@ -132,6 +132,31 @@ const AdminLayout = ({ children }) => {
             })}
           </nav>
 
+          {/* Read-Only Mode Toggle */}
+          <div className="p-4 border-t border-[#222]">
+            <button
+              onClick={toggleReadOnly}
+              disabled={togglingReadOnly}
+              className={`w-full flex items-center gap-2 px-4 py-3 text-sm transition-colors ${
+                siteStatus.read_only_mode
+                  ? 'bg-red-500/10 text-red-400 border border-red-500/30'
+                  : 'text-gray-400 hover:bg-[#1a1a1a] hover:text-white'
+              }`}
+            >
+              {siteStatus.read_only_mode ? (
+                <>
+                  <Lock className="w-5 h-5" />
+                  <span>Bakım Modu Aktif</span>
+                </>
+              ) : (
+                <>
+                  <Unlock className="w-5 h-5" />
+                  <span>Bakım Modu Pasif</span>
+                </>
+              )}
+            </button>
+          </div>
+
           {/* Preview Link */}
           <div className="p-4 border-t border-[#222]">
             <a
