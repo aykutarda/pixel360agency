@@ -13,7 +13,8 @@ import {
   Menu,
   X,
   ChevronRight,
-  AlertTriangle
+  AlertTriangle,
+  BarChart3
 } from 'lucide-react';
 
 const AdminLayout = ({ children }) => {
@@ -41,6 +42,7 @@ const AdminLayout = ({ children }) => {
     { name: 'Blog Yazıları', href: '/admin/blog', icon: BookOpen },
     { name: 'Konu Merkezleri', href: '/admin/hubs', icon: Layers },
     { name: 'Site İçeriği', href: '/admin/site-content', icon: Globe },
+    { name: 'Measurement', href: '/admin/measurement', icon: BarChart3 },
     { name: 'Ayarlar', href: '/admin/settings', icon: Settings },
   ];
 
