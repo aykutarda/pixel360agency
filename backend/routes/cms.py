@@ -146,6 +146,9 @@ async def delete_service(service_id: str):
 @router.post("/blog", response_model=BlogPost)
 async def create_blog_post(post: BlogPostCreate):
     """Create a new blog post"""
+    # Check read-only mode if trying to publish
+    await check_publish_allowed(post.status)
+    
     existing = await db.blog_posts.find_one({"seo_slug": post.seo_slug})
     if existing:
         raise HTTPException(status_code=400, detail="Slug already exists")
