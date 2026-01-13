@@ -18,6 +18,7 @@ import DashboardPage from './admin/pages/DashboardPage';
 import ServicesListPage from './admin/pages/ServicesListPage';
 import ServiceEditPage from './admin/pages/ServiceEditPage';
 import BlogListPage from './admin/pages/BlogListPage';
+import BlogEditPage from './admin/pages/BlogEditPage';
 import HubsListPage from './admin/pages/HubsListPage';
 import SiteContentPage from './admin/pages/SiteContentPage';
 import MeasurementSettingsPage from './admin/pages/MeasurementSettingsPage';
