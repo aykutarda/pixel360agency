@@ -240,10 +240,6 @@ const Hero = () => {
           
           {/* Draggable Logo Carousel Container */}
           <div className="relative">
-            {/* Gradient Fade Edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none"></div>
-            
             {/* Scrollable Track - Drag to scroll */}
             <div 
               className="flex gap-5 md:gap-6 overflow-x-auto pb-12 pt-2 px-4 scrollbar-hide cursor-grab active:cursor-grabbing select-none"
@@ -278,28 +274,28 @@ const Hero = () => {
                   key={index}
                   className="flex-shrink-0 group"
                 >
-                  {/* Premium Logo Card */}
-                  <div className="relative">
-                    {/* Glitch Effect Layers */}
-                    <div className="absolute inset-0 rounded-xl bg-purple-500/30 translate-x-[3px] translate-y-[-3px] opacity-0 group-hover:opacity-100 transition-all duration-300 blur-[1px]"></div>
-                    <div className="absolute inset-0 rounded-xl bg-cyan-400/30 translate-x-[-3px] translate-y-[3px] opacity-0 group-hover:opacity-100 transition-all duration-300 blur-[1px]"></div>
+                  {/* Premium Logo Card with Glitch Effect */}
+                  <div className="relative logo-card-glitch">
+                    {/* Glitch Clone Layers - Always visible with animation */}
+                    <div className="absolute inset-0 rounded-xl bg-[#111] border border-cyan-500/40 opacity-60 glitch-layer-cyan"></div>
+                    <div className="absolute inset-0 rounded-xl bg-[#111] border border-purple-500/40 opacity-60 glitch-layer-purple"></div>
                     
                     {/* Main Logo Container */}
                     <div className={`relative ${getLogoSizeClasses()}
-                                    bg-[#111]/80 backdrop-blur-md 
-                                    border border-gray-700/50 rounded-xl
+                                    bg-[#111]/90 backdrop-blur-md 
+                                    border border-gray-600/60 rounded-xl
                                     flex items-center justify-center 
                                     overflow-hidden 
                                     group-hover:border-accent/60 
                                     group-hover:bg-[#151515]
-                                    group-hover:shadow-[0_0_30px_rgba(200,255,0,0.15)]
+                                    group-hover:shadow-[0_0_30px_rgba(200,255,0,0.2)]
                                     transition-all duration-500`}>
                       
                       {/* Corner Accent Lines */}
-                      <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-accent/20 rounded-tl group-hover:border-accent/60 transition-colors duration-300"></div>
-                      <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/20 rounded-tr group-hover:border-accent/60 transition-colors duration-300"></div>
-                      <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/20 rounded-bl group-hover:border-accent/60 transition-colors duration-300"></div>
-                      <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-accent/20 rounded-br group-hover:border-accent/60 transition-colors duration-300"></div>
+                      <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-accent/30 rounded-tl group-hover:border-accent/70 transition-colors duration-300"></div>
+                      <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/30 rounded-tr group-hover:border-accent/70 transition-colors duration-300"></div>
+                      <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/30 rounded-bl group-hover:border-accent/70 transition-colors duration-300"></div>
+                      <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-accent/30 rounded-br group-hover:border-accent/70 transition-colors duration-300"></div>
                       
                       {/* Logo Content - Full Size */}
                       {client.logo_url ? (
@@ -322,10 +318,10 @@ const Hero = () => {
                       )}
                       
                       {/* Scanline Overlay */}
-                      <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.03)_50%)] bg-[length:100%_3px] pointer-events-none opacity-50"></div>
+                      <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.05)_50%)] bg-[length:100%_3px] pointer-events-none opacity-40"></div>
                       
                       {/* Hover Glow Ring */}
-                      <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/5 group-hover:ring-accent/20 transition-all duration-300"></div>
+                      <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/10 group-hover:ring-accent/30 transition-all duration-300"></div>
                     </div>
                     
                     {/* Brand Name Label - Fixed Position */}
