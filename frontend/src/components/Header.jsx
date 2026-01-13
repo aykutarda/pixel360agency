@@ -91,7 +91,7 @@ const Header = () => {
         {/* Menu Header */}
         <div className="px-6 md:px-12 py-4 flex justify-between items-center border-b border-dark-lighter/50">
           <span className="font-pixel text-white text-base md:text-lg tracking-wider">
-            <span className="text-accent">{logo.charAt(0)}</span>{logo.slice(1)}
+            <span className="text-accent glitch" data-text={logo.charAt(0)}>{logo.charAt(0)}</span>{logo.slice(1)}
           </span>
           <button 
             onClick={() => setIsMenuOpen(false)}
