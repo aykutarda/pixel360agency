@@ -9,7 +9,7 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 - **Database**: MongoDB
 - **Hosting**: Emergent Platform
 
-## Current Status: Phase 2.6 Complete - Admin Panel Enhancements ✅
+## Current Status: Phase 2.7 Complete - Client Logo Upload Feature ✅
 
 ### Completed Features
 
@@ -107,6 +107,26 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
   - Hub ve Service bağlantı durumu ✓ / ⚠️
   - SEO sağlık skoru (%)
   - Hızlı bağlantı dropdown'ları
+
+#### Phase 2.7: Client Logo Upload Feature (Complete ✅) - January 13, 2026
+- [x] **Backend Logo Upload API** (`/api/upload/*`)
+  - `POST /api/upload/logo` - Görsel yükleme (jpg, png, gif, webp, svg)
+  - `GET /api/upload/logos` - Yüklenen logoları listele
+  - `DELETE /api/upload/logo/{filename}` - Logo sil
+  - Pillow ile otomatik resize (max 200x80)
+  - Benzersiz filename ile `/uploads/logos/` dizinine kayıt
+- [x] **Admin Panel Logo Upload UI** (`/admin/site-content`)
+  - Trust Badges bölümünde her müşteri için "Logo Görseli Yükle" butonu
+  - Dosya seçme, yükleme durumu göstergesi
+  - Logo önizleme ve URL gösterimi
+  - "Görseli Kaldır" butonu
+- [x] **Frontend Logo Display** (`Hero.jsx`)
+  - `logo_url` varsa `<img>` tag ile görsel gösterim
+  - Grayscale filtre, hover'da renkli geçiş
+  - Glitch efekti çerçevesi
+- [x] **Test Suite** (`/app/tests/test_logo_upload.py`)
+  - 11 test case: upload, list, delete, validation, resize
+  - %100 başarı oranı
 
 ### Database Content
 - 3 Services: Google Ads Yönetimi, Meta Ads Yönetimi, SEO Hizmeti
