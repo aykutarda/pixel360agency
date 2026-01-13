@@ -295,6 +295,9 @@ async def update_hub(hub_id: str, hub: HubPageCreate):
     if not existing:
         raise HTTPException(status_code=404, detail="Hub not found")
     
+    # Check read-only mode if trying to publish
+    await check_publish_allowed(hub.status, existing.get("status"))
+    
     old_slug = existing.get("seo_slug")
     new_slug = hub.seo_slug
     old_status = existing.get("status")
