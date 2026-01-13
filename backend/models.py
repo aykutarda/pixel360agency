@@ -250,6 +250,20 @@ class Category(CategoryCreate):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 # ============================================
+# SITE SECTIONS (CMS for website content)
+# ============================================
+
+class SiteSectionCreate(BaseModel):
+    key: str  # header, hero, stats, footer, trust_badges
+    payload: dict  # JSON content
+    version: int = 1
+
+class SiteSection(SiteSectionCreate):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_by: Optional[str] = None
+
+# ============================================
 # ADMIN AUTH
 # ============================================
 
@@ -264,11 +278,44 @@ class AdminUser(BaseModel):
     name: str
     hashed_password: str
     is_active: bool = True
+    must_change_password: bool = True  # Force password change on first login
+    failed_login_attempts: int = 0
+    locked_until: Optional[datetime] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
+    last_login: Optional[datetime] = None
+
+class AdminPasswordChange(BaseModel):
+    current_password: str
+    new_password: str
 
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
+    must_change_password: bool = False
 
 class TokenData(BaseModel):
     email: Optional[str] = None
+
+# ============================================
+# LOGIN ATTEMPT TRACKING
+# ============================================
+
+class LoginAttempt(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    email: str
+    ip_address: Optional[str] = None
+    success: bool
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+# ============================================
+# PREVIEW TOKEN
+# ============================================
+
+class PreviewToken(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    content_type: str  # service, blog, hub
+    content_id: str
+    token: str
+    expires_at: datetime
+    created_by: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
