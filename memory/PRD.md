@@ -9,7 +9,7 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 - **Database**: MongoDB
 - **Hosting**: Emergent Platform
 
-## Current Status: Phase 2.2 Complete - Full CMS Control ✅
+## Current Status: Phase 2.5 Complete - Measurement & Conversion Foundation ✅
 
 ### Completed Features
 
@@ -44,22 +44,38 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 
 #### Phase 2.2: Full CMS Control (Complete ✅) - January 13, 2026
 - [x] **All 11 Site Sections Manageable via Admin**
-  - Header (logo, nav links, phone, CTA button)
-  - Hero (badge, title lines, subtitle, description, CTAs)
-  - Stats (4 metrics with numbers/labels)
-  - Trust Badges (partners list, client logos)
-  - Why Us (badge, title, 4 feature items with icons)
-  - AI Capabilities (badge, title, 6 AI features with metrics)
-  - Framework (badge, title, 4 methodology steps)
-  - Portfolio/Başarı Hikayeleri (badge, title, project cards)
-  - Testimonials/Müşteri Yorumları (badge, title, testimonial items)
-  - Contact/İletişim (badge, title, form settings, features)
-  - Footer (logo, slogan, contact info, social links, copyright)
+  - Header, Hero, Stats, Trust Badges, Why Us, AI Capabilities, Framework
+  - Portfolio/Başarı Hikayeleri, Testimonials/Müşteri Yorumları, Contact/İletişim, Footer
 - [x] **All Frontend Components Dynamic**
-  - WhyUs.jsx, AICapabilities (inside Services), Framework.jsx
-  - Portfolio.jsx, Testimonials (part of Contact), Contact.jsx, Footer.jsx
-  - All fetch from `/api/site/sections/{key}` with fallback data
 - [x] **Deleted obsolete mock.js file**
+
+#### Phase 2.5: Measurement & Conversion Foundation (Complete ✅) - January 13, 2026
+- [x] **Backend Measurement Settings API** (`/api/measurement/*`)
+  - `GET /api/measurement/config` - Public config for frontend
+  - `GET /api/measurement/settings` - Admin settings (auth required)
+  - `PUT /api/measurement/settings` - Update settings (auth required)
+  - `GET /api/measurement/test-config` - Test configuration status
+- [x] **Admin Measurement Settings Page** (`/admin/measurement`)
+  - Google Tag Manager (GTM) - Container ID placeholder
+  - Google Analytics 4 (GA4) - Measurement ID placeholder
+  - Google Ads - Account ID & Conversion Labels
+  - Meta (Facebook) Pixel - Pixel ID placeholder
+  - Microsoft Clarity - Project ID placeholder (optional)
+  - Hotjar - Site ID placeholder (optional)
+  - Event configuration (scroll depth, time on page thresholds)
+  - Event Reference table (lead_form_submit, contact_click, etc.)
+- [x] **Frontend Measurement Utilities** (`/utils/measurement.js`)
+  - `initMeasurement()` - Load config from backend
+  - `pushToDataLayer()` - GTM dataLayer integration
+  - `trackPageView()`, `trackScrollDepth()`, `trackTimeOnPage()` - Page events
+  - `trackLeadFormSubmit()` - PRIMARY CONVERSION
+  - `trackContactClick()`, `trackServiceCtaClick()`, `trackBlogToServiceClick()` - Secondary conversions
+  - `getPageType()`, `getContentId()`, `getDeviceType()`, `getTrafficSource()` - Context helpers
+- [x] **GTM Script Loader** (`/components/GTMScript.jsx`)
+  - Dynamic GTM loading based on backend config
+- [x] **Contact Component Event Tracking**
+  - Form submit tracks `lead_form_submit`
+  - Phone/WhatsApp/Email clicks track `contact_click`
 
 ### Database Content
 - 3 Services: Google Ads Yönetimi, Meta Ads Yönetimi, SEO Hizmeti
