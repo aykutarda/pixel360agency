@@ -79,6 +79,7 @@ async def update_service(service_id: str, service: ServiceCreate):
     # Check if slug changed and handle redirect
     old_slug = existing.get("seo_slug")
     new_slug = service.seo_slug
+    old_status = existing.get("status")
     
     if old_slug != new_slug:
         # Check new slug uniqueness
@@ -86,14 +87,15 @@ async def update_service(service_id: str, service: ServiceCreate):
         if slug_exists:
             raise HTTPException(status_code=400, detail="Slug already exists")
         
-        # Create automatic redirect
-        redirect = Redirect(
-            from_path=f"/hizmetler/{old_slug}",
-            to_path=f"/hizmetler/{new_slug}",
-            status_code=301,
-            note="Auto-generated on slug change"
-        )
-        await db.redirects.insert_one(redirect.dict())
+        # Only create redirect if the content was published (avoid draft noise)
+        if old_status == "published":
+            redirect = Redirect(
+                from_path=f"/hizmetler/{old_slug}",
+                to_path=f"/hizmetler/{new_slug}",
+                status_code=301,
+                note="Auto-generated on slug change"
+            )
+            await db.redirects.insert_one(redirect.dict())
     
     update_data = service.dict()
     update_data["updated_at"] = datetime.utcnow()
