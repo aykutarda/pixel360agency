@@ -16,7 +16,8 @@ import {
   Activity,
   Radio,
   Wifi,
-  WifiOff
+  WifiOff,
+  TrendingUp
 } from 'lucide-react';
 import { Toaster, toast } from 'sonner';
 
