@@ -14,14 +14,54 @@ import {
   X,
   ChevronRight,
   AlertTriangle,
-  BarChart3
+  BarChart3,
+  Lock,
+  Unlock
 } from 'lucide-react';
+
+const API = process.env.REACT_APP_BACKEND_URL;
 
 const AdminLayout = ({ children }) => {
   const { user, logout } = useAuth();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [siteStatus, setSiteStatus] = useState({ read_only_mode: false });
+  const [togglingReadOnly, setTogglingReadOnly] = useState(false);
+
+  // Load site status
+  useEffect(() => {
+    const loadSiteStatus = async () => {
+      try {
+        const response = await fetch(`${API}/api/settings/status`);
+        const data = await response.json();
+        setSiteStatus(data);
+      } catch (error) {
+        console.error('Error loading site status:', error);
+      }
+    };
+    loadSiteStatus();
+  }, []);
+
+  // Toggle read-only mode
+  const toggleReadOnly = async () => {
+    setTogglingReadOnly(true);
+    try {
+      const token = localStorage.getItem('admin_token');
+      const response = await fetch(`${API}/api/settings/toggle-read-only`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      setSiteStatus({ read_only_mode: data.read_only_mode });
+    } catch (error) {
+      console.error('Error toggling read-only mode:', error);
+    } finally {
+      setTogglingReadOnly(false);
+    }
+  };
 
   // Warn before leaving with unsaved changes
   useEffect(() => {
