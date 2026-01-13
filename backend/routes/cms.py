@@ -168,7 +168,8 @@ async def update_service(service_id: str, service: ServiceCreate):
             await db.redirects.insert_one(redirect.dict())
     
     update_data = service.dict()
-    update_data["updated_at"] = datetime.utcnow()
+    update_data["updated_at"] = datetime.now(timezone.utc)
+    update_data["last_change_summary"] = generate_change_summary(existing, update_data)
     
     await db.services.update_one({"id": service_id}, {"$set": update_data})
     updated = await db.services.find_one({"id": service_id})
