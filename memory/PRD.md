@@ -168,12 +168,35 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 - [ ] `/case-studies/:slug` dynamic route
 - [ ] Case study editor in admin panel
 
+### Phase 3.5: Ads Integration
+- [ ] Google Ads campaign setup
+- [ ] Meta Ads campaign setup
+- [ ] Conversion tracking verification in GTM
+- [ ] Landing page optimization for ad campaigns
+
 ### Future Tasks (P2)
 - [ ] Interactive lead-gen tools (Growth Calculator, AI SEO Audit)
 - [ ] Enhanced CMS (user roles, versioning)
 - [ ] Content preview with draft token
 - [ ] Image upload/management system
+- [ ] Server-side GTM (Phase 3 Measurement)
+- [ ] Meta Conversions API (CAPI)
 
 ---
 **Last Updated**: January 13, 2026
-**Status**: Phase 2.2 Complete - Full CMS Control (All 11 site sections editable)
+**Status**: Phase 2.5 Complete - Measurement & Conversion Foundation
+
+## Measurement Setup Instructions
+
+### Required Tracking IDs (Admin Panel > Measurement)
+1. **GTM Container ID** (GTM-XXXXXXX) - Google Tag Manager > Admin > Container ID
+2. **GA4 Measurement ID** (G-XXXXXXXXXX) - GA4 > Admin > Data Streams
+3. **Google Ads ID** (AW-XXXXXXXXX) - Google Ads > Tools > Conversions
+4. **Meta Pixel ID** - Meta Events Manager > Data Sources
+
+### GTM Tags to Configure
+After entering IDs in admin panel, create these tags in GTM:
+1. GA4 Configuration Tag
+2. GA4 Event Tags (lead_form_submit, contact_click, scroll_depth, time_on_page)
+3. Google Ads Conversion Tag (for lead_form_submit - PRIMARY)
+4. Meta Pixel Base Tag + Lead Event
