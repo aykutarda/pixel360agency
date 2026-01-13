@@ -240,6 +240,10 @@ class BlogPost(BlogPostCreate):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+    # Change Log (Light)
+    created_by: Optional[str] = None
+    updated_by: Optional[str] = None
+    last_change_summary: Optional[str] = None
 
 # ============================================
 # HUB PAGES (Topics)
