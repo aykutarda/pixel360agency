@@ -203,52 +203,75 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Client Logos Marquee */}
+        {/* Client Logos Section - Premium Design */}
         <div className="mt-16 pt-12 border-t border-dark-lighter/50">
-          <p className="text-center text-gray-500 text-xs font-mono tracking-wider mb-8">
-            BÜYÜME ORTAKLARIMIZ
+          <p className="text-center text-gray-400 text-sm font-mono tracking-[0.3em] mb-10 uppercase">
+            Büyüme Ortaklarımız
           </p>
-          <div className="relative overflow-hidden">
-            <div className="flex animate-marquee gap-8 md:gap-12">
+          
+          {/* Logo Carousel Container */}
+          <div className="relative overflow-hidden py-4">
+            {/* Gradient Fade Edges */}
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none"></div>
+            
+            {/* Marquee Track */}
+            <div className="flex animate-marquee-slow gap-6 md:gap-8">
               {[...clientLogos, ...clientLogos].map((client, index) => (
                 <div 
                   key={index}
-                  className="flex-shrink-0 group"
+                  className="flex-shrink-0 group cursor-pointer"
                 >
-                  {/* Glitch Frame Logo Container */}
+                  {/* Premium Logo Card */}
                   <div className="relative">
-                    {/* Glitch Effect Layers */}
-                    <div className="absolute inset-0 bg-purple-500/20 translate-x-[2px] translate-y-[-2px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div className="absolute inset-0 bg-cyan-500/20 translate-x-[-2px] translate-y-[2px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    {/* Glitch Effect Layers - More Visible */}
+                    <div className="absolute inset-0 rounded-xl bg-purple-500/30 translate-x-[3px] translate-y-[-3px] opacity-0 group-hover:opacity-100 transition-all duration-300 blur-[1px]"></div>
+                    <div className="absolute inset-0 rounded-xl bg-cyan-400/30 translate-x-[-3px] translate-y-[3px] opacity-0 group-hover:opacity-100 transition-all duration-300 blur-[1px]"></div>
                     
-                    {/* Main Logo Container */}
-                    <div className="relative w-28 md:w-32 h-14 md:h-16 bg-dark-light/50 backdrop-blur-sm border border-dark-lighter flex items-center justify-center overflow-hidden group-hover:border-accent/50 transition-all duration-300">
-                      {/* Corner Accents */}
-                      <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent/30 group-hover:border-accent transition-colors"></div>
-                      <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent/30 group-hover:border-accent transition-colors"></div>
-                      <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent/30 group-hover:border-accent transition-colors"></div>
-                      <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent/30 group-hover:border-accent transition-colors"></div>
+                    {/* Main Logo Container - Larger & Rounded */}
+                    <div className="relative w-44 md:w-52 lg:w-56 h-20 md:h-24 lg:h-28 
+                                    bg-[#111]/80 backdrop-blur-md 
+                                    border border-gray-700/50 rounded-xl
+                                    flex items-center justify-center 
+                                    overflow-hidden 
+                                    group-hover:border-accent/60 
+                                    group-hover:bg-[#151515]
+                                    group-hover:shadow-[0_0_30px_rgba(200,255,0,0.15)]
+                                    transition-all duration-500">
+                      
+                      {/* Corner Accent Lines - Tech Style */}
+                      <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-accent/20 rounded-tl group-hover:border-accent/60 transition-colors duration-300"></div>
+                      <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/20 rounded-tr group-hover:border-accent/60 transition-colors duration-300"></div>
+                      <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/20 rounded-bl group-hover:border-accent/60 transition-colors duration-300"></div>
+                      <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-accent/20 rounded-br group-hover:border-accent/60 transition-colors duration-300"></div>
                       
                       {/* Logo Content */}
                       {client.logo_url ? (
                         <img 
                           src={client.logo_url} 
                           alt={client.name} 
-                          className="max-w-[80%] max-h-[70%] object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                          className="max-w-[75%] max-h-[65%] object-contain 
+                                     filter grayscale brightness-75 
+                                     group-hover:grayscale-0 group-hover:brightness-100 
+                                     transition-all duration-500"
                         />
                       ) : (
-                        <span className="text-gray-400 font-mono text-sm group-hover:text-accent transition-colors">
-                          {client.logo || client.name?.substring(0, 3).toUpperCase()}
+                        <span className="text-gray-300 font-mono text-xl md:text-2xl font-bold tracking-wider
+                                         group-hover:text-white transition-colors duration-300">
+                          {client.logo || client.name?.substring(0, 4).toUpperCase()}
                         </span>
                       )}
                       
-                      {/* Scanline Effect */}
-                      <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_4px] pointer-events-none opacity-30"></div>
+                      {/* Subtle Scanline Overlay */}
+                      <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.03)_50%)] bg-[length:100%_3px] pointer-events-none opacity-50"></div>
+                      
+                      {/* Hover Glow Ring */}
+                      <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/5 group-hover:ring-accent/20 transition-all duration-300"></div>
                     </div>
                     
-                    {/* Brand Name Tooltip */}
-                    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="text-xs font-mono text-accent whitespace-nowrap">{client.name}</span>
+                    {/* Brand Name Label */}
+                    <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-0 translate-y-1">
+                      <span className="text-xs font-mono text-accent/80 whitespace-nowrap bg-dark/80 px-2 py-0.5 rounded">{client.name}</span>
                     </div>
                   </div>
                 </div>
