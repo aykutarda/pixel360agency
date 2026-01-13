@@ -77,6 +77,7 @@ api_router.include_router(cms.router, prefix="/cms", tags=["CMS"])
 api_router.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 api_router.include_router(seed.router, prefix="/seed", tags=["Seed Data"])
 api_router.include_router(site_sections.router, prefix="/site", tags=["Site Sections"])
+api_router.include_router(measurement.router, prefix="/measurement", tags=["Measurement & Tracking"])
 
 # Include SEO routes (sitemap, robots.txt)
 app.include_router(seo.router, tags=["SEO"])
