@@ -42,6 +42,49 @@ async def check_publish_allowed(new_status: str, old_status: str = None):
 
 
 # ============================================
+# CHANGE LOG HELPER
+# ============================================
+
+def generate_change_summary(old_data: dict, new_data: dict, important_fields: list = None) -> str:
+    """Generate a summary of what changed"""
+    if important_fields is None:
+        important_fields = [
+            'seo_title', 'seo_description', 'seo_slug', 'title', 'name',
+            'hero_h1', 'hero_summary', 'content', 'status', 'intro'
+        ]
+    
+    changed_fields = []
+    
+    for field in important_fields:
+        old_val = old_data.get(field)
+        new_val = new_data.get(field)
+        
+        if old_val != new_val:
+            # Map field names to Turkish labels
+            field_labels = {
+                'seo_title': 'SEO başlık',
+                'seo_description': 'SEO açıklama',
+                'seo_slug': 'URL slug',
+                'title': 'başlık',
+                'name': 'ad',
+                'hero_h1': 'H1 başlık',
+                'hero_summary': 'özet',
+                'content': 'içerik',
+                'status': 'durum',
+                'intro': 'giriş metni'
+            }
+            changed_fields.append(field_labels.get(field, field))
+    
+    if not changed_fields:
+        return "Küçük değişiklikler"
+    
+    if len(changed_fields) <= 3:
+        return ', '.join(changed_fields) + ' güncellendi'
+    else:
+        return f"{', '.join(changed_fields[:2])} ve {len(changed_fields) - 2} alan daha güncellendi"
+
+
+# ============================================
 # SERVICES CRUD
 # ============================================
 
