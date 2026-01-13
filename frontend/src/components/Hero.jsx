@@ -235,7 +235,7 @@ const Hero = () => {
         {/* Client Logos Section - Premium Design */}
         <div className="mt-16 pt-12 border-t border-dark-lighter/50">
           <p className="text-center text-gray-400 text-sm font-mono tracking-[0.3em] mb-10 uppercase">
-            Büyüme Ortaklarımız
+            {logoSettings.section_title}
           </p>
           
           {/* Logo Carousel Container */}
@@ -245,7 +245,7 @@ const Hero = () => {
             <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none"></div>
             
             {/* Marquee Track */}
-            <div className="flex animate-marquee-slow gap-6 md:gap-8">
+            <div className={`flex ${getAnimationClass()} gap-6 md:gap-8`}>
               {[...clientLogos, ...clientLogos].map((client, index) => (
                 <div 
                   key={index}
@@ -257,8 +257,8 @@ const Hero = () => {
                     <div className="absolute inset-0 rounded-xl bg-purple-500/30 translate-x-[3px] translate-y-[-3px] opacity-0 group-hover:opacity-100 transition-all duration-300 blur-[1px]"></div>
                     <div className="absolute inset-0 rounded-xl bg-cyan-400/30 translate-x-[-3px] translate-y-[3px] opacity-0 group-hover:opacity-100 transition-all duration-300 blur-[1px]"></div>
                     
-                    {/* Main Logo Container - Larger & Rounded */}
-                    <div className="relative w-44 md:w-52 lg:w-56 h-20 md:h-24 lg:h-28 
+                    {/* Main Logo Container - Dynamic Size */}
+                    <div className={`relative ${getLogoSizeClasses()}
                                     bg-[#111]/80 backdrop-blur-md 
                                     border border-gray-700/50 rounded-xl
                                     flex items-center justify-center 
@@ -266,7 +266,7 @@ const Hero = () => {
                                     group-hover:border-accent/60 
                                     group-hover:bg-[#151515]
                                     group-hover:shadow-[0_0_30px_rgba(200,255,0,0.15)]
-                                    transition-all duration-500">
+                                    transition-all duration-500`}>
                       
                       {/* Corner Accent Lines - Tech Style */}
                       <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-accent/20 rounded-tl group-hover:border-accent/60 transition-colors duration-300"></div>
