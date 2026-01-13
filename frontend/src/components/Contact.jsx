@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Send, Phone, Mail, MapPin, MessageCircle, CheckCircle, Zap, Brain, ArrowRight, Calendar, Download } from 'lucide-react';
-import { contactData, siteData, servicesData, ctaOptions } from '../data/mock';
 
 const Contact = () => {
+  const [data, setData] = useState(null);
+  const [footerData, setFooterData] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -14,6 +15,21 @@ const Contact = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/site/sections`);
+      const sections = await res.json();
+      setData(sections.contact);
+      setFooterData(sections.footer);
+    } catch (error) {
+      console.error('Error loading contact data:', error);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,6 +44,10 @@ const Contact = () => {
     }, 3000);
   };
 
+  if (!data || !footerData) return null;
+
+  const contact = footerData.contact || {};
+
   return (
     <section id="contact" className="relative py-24 px-6 md:px-12 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-dark-light/20 via-transparent to-dark-light/30 pointer-events-none"></div>
@@ -38,39 +58,27 @@ const Contact = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-2 mb-6">
             <Zap className="w-4 h-4 text-accent animate-pulse" />
-            <span className="text-accent text-sm font-mono tracking-wider">HAREKETE GEÇİN</span>
+            <span className="text-accent text-sm font-mono tracking-wider">{data.badge}</span>
           </div>
           <h2 className="font-pixel text-white text-[32px] md:text-[48px] lg:text-[64px] leading-[1] tracking-tight mb-4">
-            <span className="text-accent">B</span>ÜYÜMEYE HAZIR MISINIZ?
+            <span className="text-accent">{data.title?.charAt(0)}</span>{data.title?.slice(1)}
           </h2>
           <p className="text-gray-400 font-mono text-sm md:text-base max-w-2xl mx-auto">
-            {contactData.description}
+            {data.subtitle}
           </p>
         </div>
 
-        {/* CTA Options */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-          {ctaOptions.map((cta, index) => (
-            <button 
-              key={index}
-              className={`group p-6 border transition-all duration-300 text-left ${
-                index === 0 
-                  ? 'bg-accent text-dark border-accent hover:bg-white' 
-                  : 'bg-dark-light/50 border-dark-lighter text-white hover:border-accent'
-              }`}
-            >
-              <div className="flex items-center gap-3 mb-2">
-                {index === 0 && <Calendar className="w-5 h-5" />}
-                {index === 1 && <Brain className="w-5 h-5 text-accent group-hover:text-accent" />}
-                {index === 2 && <Download className="w-5 h-5 text-accent group-hover:text-accent" />}
-                <span className="font-mono font-bold">{cta.text}</span>
+        {/* Features List */}
+        {data.features?.length > 0 && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            {data.features.map((feature, index) => (
+              <div key={index} className="flex items-center gap-2 bg-dark-light/50 border border-dark-lighter p-4">
+                <CheckCircle className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-gray-300 font-mono text-sm">{feature}</span>
               </div>
-              <p className={`text-sm font-mono ${index === 0 ? 'text-dark/70' : 'text-gray-400'}`}>
-                {cta.description}
-              </p>
-            </button>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
         
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           
@@ -83,7 +91,7 @@ const Contact = () => {
             
             <div className="space-y-4">
               <a 
-                href={`tel:${siteData.phone}`}
+                href={`tel:${contact.phone?.replace(/\s/g, '')}`}
                 className="group flex items-center gap-4 p-4 bg-dark-light/50 backdrop-blur-sm border border-dark-lighter hover:border-accent/50 transition-all duration-300"
               >
                 <div className="w-12 h-12 bg-accent/10 flex items-center justify-center border border-accent/20 group-hover:bg-accent transition-colors">
@@ -91,12 +99,12 @@ const Contact = () => {
                 </div>
                 <div>
                   <span className="text-gray-400 text-xs font-mono block">Hemen Ara</span>
-                  <span className="text-white font-mono group-hover:text-accent transition-colors">{siteData.phone}</span>
+                  <span className="text-white font-mono group-hover:text-accent transition-colors">{contact.phone}</span>
                 </div>
               </a>
               
               <a 
-                href={`https://wa.me/${siteData.whatsapp}?text=Merhaba, büyüme stratejisi hakkında görüşmek istiyorum.`}
+                href={`https://wa.me/${contact.whatsapp}?text=Merhaba, büyüme stratejisi hakkında görüşmek istiyorum.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-4 p-4 bg-green-500/10 border border-green-500/30 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300"
@@ -111,7 +119,7 @@ const Contact = () => {
               </a>
               
               <a 
-                href={`mailto:${siteData.email}`}
+                href={`mailto:${contact.email}`}
                 className="group flex items-center gap-4 p-4 bg-dark-light/50 backdrop-blur-sm border border-dark-lighter hover:border-accent/50 transition-all duration-300"
               >
                 <div className="w-12 h-12 bg-accent/10 flex items-center justify-center border border-accent/20 group-hover:bg-accent transition-colors">
@@ -119,7 +127,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <span className="text-gray-400 text-xs font-mono block">E-posta</span>
-                  <span className="text-white font-mono group-hover:text-accent transition-colors">{siteData.email}</span>
+                  <span className="text-white font-mono group-hover:text-accent transition-colors">{contact.email}</span>
                 </div>
               </a>
               
@@ -129,7 +137,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <span className="text-gray-400 text-xs font-mono block">Ofis</span>
-                  <span className="text-white font-mono">{siteData.address}</span>
+                  <span className="text-white font-mono">{contact.address}</span>
                 </div>
               </div>
             </div>
@@ -152,10 +160,11 @@ const Contact = () => {
               <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-accent"></div>
               <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-accent"></div>
               
-              <h3 className="font-pixel text-white text-xl mb-6 flex items-center gap-3">
+              <h3 className="font-pixel text-white text-xl mb-2 flex items-center gap-3">
                 <Brain className="w-5 h-5 text-accent" />
-                <span>{contactData.formTitle}</span>
+                <span>{data.form_title}</span>
               </h3>
+              <p className="text-gray-400 font-mono text-sm mb-6">{data.form_description}</p>
               
               {isSubmitted ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -213,38 +222,6 @@ const Contact = () => {
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="text-gray-400 text-xs font-mono block mb-2">İlgindiğiniz Alan *</label>
-                      <select 
-                        name="service" value={formData.service} onChange={handleChange}
-                        onFocus={() => setFocusedField('service')} onBlur={() => setFocusedField(null)}
-                        required
-                        className={`w-full bg-dark/50 border text-white font-mono px-4 py-3 focus:outline-none transition-all ${focusedField === 'service' ? 'border-accent shadow-[0_0_15px_rgba(230,255,0,0.2)]' : 'border-dark-lighter'}`}
-                      >
-                        <option value="">Seçiniz</option>
-                        {servicesData.services.map((service) => (
-                          <option key={service.id} value={service.shortName}>{service.shortName}</option>
-                        ))}
-                        <option value="360 Paket">360° Tam Büyüme Paketi</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="text-gray-400 text-xs font-mono block mb-2">Aylık Bütçe</label>
-                      <select 
-                        name="budget" value={formData.budget} onChange={handleChange}
-                        onFocus={() => setFocusedField('budget')} onBlur={() => setFocusedField(null)}
-                        className={`w-full bg-dark/50 border text-white font-mono px-4 py-3 focus:outline-none transition-all ${focusedField === 'budget' ? 'border-accent shadow-[0_0_15px_rgba(230,255,0,0.2)]' : 'border-dark-lighter'}`}
-                      >
-                        <option value="">Seçiniz</option>
-                        <option value="25000-50000">25.000₺ - 50.000₺</option>
-                        <option value="50000-100000">50.000₺ - 100.000₺</option>
-                        <option value="100000-250000">100.000₺ - 250.000₺</option>
-                        <option value="250000+">250.000₺ +</option>
-                      </select>
-                    </div>
-                  </div>
-                  
                   <div>
                     <label className="text-gray-400 text-xs font-mono block mb-2">Büyüme Hedefiniz</label>
                     <textarea 
@@ -252,7 +229,7 @@ const Contact = () => {
                       onFocus={() => setFocusedField('message')} onBlur={() => setFocusedField(null)}
                       rows={3}
                       className={`w-full bg-dark/50 border text-white font-mono px-4 py-3 focus:outline-none transition-all resize-none ${focusedField === 'message' ? 'border-accent shadow-[0_0_15px_rgba(230,255,0,0.2)]' : 'border-dark-lighter'}`}
-                      placeholder="Nasıl bir büyüme hedefliyorsunuz? Hangi sorunları çözmek istiyorsunuz?"
+                      placeholder="Nasıl bir büyüme hedefliyorsunuz?"
                     />
                   </div>
                   
@@ -262,7 +239,7 @@ const Contact = () => {
                   >
                     <span className="relative z-10 flex items-center gap-3">
                       <Send className="w-5 h-5" />
-                      STRATEJİ GÖRÜŞMESİ TALEP ET
+                      {data.form_cta}
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </span>
                     <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
