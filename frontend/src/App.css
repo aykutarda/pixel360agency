@@ -341,6 +341,16 @@ img {
   animation-play-state: paused;
 }
 
+/* Hide scrollbar for drag scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Hover card glow effect */
 .hover-glow:hover {
   box-shadow: 
