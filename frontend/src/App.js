@@ -14,6 +14,8 @@ import ChangePasswordPage from './admin/pages/ChangePasswordPage';
 import DashboardPage from './admin/pages/DashboardPage';
 import ServicesListPage from './admin/pages/ServicesListPage';
 import ServiceEditPage from './admin/pages/ServiceEditPage';
+import BlogListPage from './admin/pages/BlogListPage';
+import HubsListPage from './admin/pages/HubsListPage';
 import SiteContentPage from './admin/pages/SiteContentPage';
 
 // Admin route wrapper
@@ -56,6 +58,8 @@ function App() {
               <Route path="/admin" element={<AdminRoute><DashboardPage /></AdminRoute>} />
               <Route path="/admin/services" element={<AdminRoute><ServicesListPage /></AdminRoute>} />
               <Route path="/admin/services/:id" element={<AdminRoute><ServiceEditPage /></AdminRoute>} />
+              <Route path="/admin/blog" element={<AdminRoute><BlogListPage /></AdminRoute>} />
+              <Route path="/admin/hubs" element={<AdminRoute><HubsListPage /></AdminRoute>} />
               <Route path="/admin/site-content" element={<AdminRoute><SiteContentPage /></AdminRoute>} />
               
               {/* Fallback */}
