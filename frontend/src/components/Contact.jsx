@@ -106,6 +106,8 @@ const Contact = () => {
             <div className="space-y-4">
               <a 
                 href={`tel:${contact.phone?.replace(/\s/g, '')}`}
+                onClick={handlePhoneClick}
+                data-testid="contact-phone-link"
                 className="group flex items-center gap-4 p-4 bg-dark-light/50 backdrop-blur-sm border border-dark-lighter hover:border-accent/50 transition-all duration-300"
               >
                 <div className="w-12 h-12 bg-accent/10 flex items-center justify-center border border-accent/20 group-hover:bg-accent transition-colors">
@@ -121,6 +123,8 @@ const Contact = () => {
                 href={`https://wa.me/${contact.whatsapp}?text=Merhaba, büyüme stratejisi hakkında görüşmek istiyorum.`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={handleWhatsAppClick}
+                data-testid="contact-whatsapp-link"
                 className="group flex items-center gap-4 p-4 bg-green-500/10 border border-green-500/30 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300"
               >
                 <div className="w-12 h-12 bg-green-500/20 flex items-center justify-center group-hover:bg-green-500 transition-colors">
@@ -134,6 +138,8 @@ const Contact = () => {
               
               <a 
                 href={`mailto:${contact.email}`}
+                onClick={handleEmailClick}
+                data-testid="contact-email-link"
                 className="group flex items-center gap-4 p-4 bg-dark-light/50 backdrop-blur-sm border border-dark-lighter hover:border-accent/50 transition-all duration-300"
               >
                 <div className="w-12 h-12 bg-accent/10 flex items-center justify-center border border-accent/20 group-hover:bg-accent transition-colors">
