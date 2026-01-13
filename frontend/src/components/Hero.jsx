@@ -306,7 +306,7 @@ const Hero = () => {
                         <img 
                           src={client.logo_url} 
                           alt={client.name} 
-                          className="w-[85%] h-[75%] object-contain 
+                          className="w-full h-full object-contain p-3 md:p-4
                                      filter grayscale brightness-90 
                                      group-hover:grayscale-0 group-hover:brightness-100 
                                      transition-all duration-500
@@ -314,7 +314,7 @@ const Hero = () => {
                           draggable="false"
                         />
                       ) : (
-                        <span className="text-gray-300 font-mono text-xl md:text-2xl font-bold tracking-wider
+                        <span className="text-gray-300 font-mono text-2xl md:text-3xl font-bold tracking-wider
                                          group-hover:text-white transition-colors duration-300
                                          pointer-events-none select-none">
                           {client.logo || client.name?.substring(0, 4).toUpperCase()}
