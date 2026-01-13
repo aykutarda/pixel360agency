@@ -104,6 +104,20 @@ const ServiceEditPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // If trying to publish, show PublishGuard first
+    if (formData.status === 'published') {
+      const validation = validatePublish(formData, 'service');
+      if (!validation.isValid || validation.hasWarnings) {
+        setShowPublishGuard(true);
+        return;
+      }
+    }
+    
+    await saveService();
+  };
+
+  const saveService = async () => {
     setSaving(true);
 
     try {
@@ -115,12 +129,15 @@ const ServiceEditPage = () => {
         await updateService(id, formData);
         toast.success('Hizmet güncellendi');
         setHasChanges(false);
+        // Reload to get updated change log info
+        await loadService();
       }
     } catch (error) {
       const message = error.response?.data?.detail || 'Kaydetme başarısız';
       toast.error(message);
     } finally {
       setSaving(false);
+      setShowPublishGuard(false);
     }
   };
 
