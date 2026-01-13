@@ -76,7 +76,7 @@ const Services = () => {
             <span className="text-accent text-sm font-mono tracking-wider">360° ÇÖZÜMLER</span>
           </div>
           <h2 className="font-pixel text-white text-[32px] md:text-[48px] lg:text-[64px] leading-[1] tracking-tight mb-4">
-            <span className="text-accent">H</span>İZMETLERİMİZ
+            <span className="text-accent glitch" data-text="H">H</span>İZMETLERİMİZ
           </h2>
           <p className="text-gray-400 font-mono text-sm md:text-base max-w-2xl mx-auto">
             AI-Destekli Büyüme Çözümleri
