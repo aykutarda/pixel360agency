@@ -48,6 +48,9 @@ async def check_publish_allowed(new_status: str, old_status: str = None):
 @router.post("/services", response_model=Service)
 async def create_service(service: ServiceCreate):
     """Create a new service page"""
+    # Check read-only mode if trying to publish
+    await check_publish_allowed(service.status)
+    
     # Check slug uniqueness
     existing = await db.services.find_one({"seo_slug": service.seo_slug})
     if existing:
