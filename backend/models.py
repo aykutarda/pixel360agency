@@ -91,6 +91,25 @@ class MeasurementSettings(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     updated_by: Optional[str] = None
 
+
+# ============================================
+# SITE SETTINGS (READ-ONLY MODE, etc.)
+# ============================================
+
+class SiteSettings(BaseModel):
+    """Global site settings including maintenance mode"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    
+    # Read-Only / Maintenance Mode
+    read_only_mode: bool = False
+    read_only_message: str = "Site şu anda bakım modunda. İçerik yayınlanamaz."
+    read_only_started_at: Optional[datetime] = None
+    read_only_started_by: Optional[str] = None
+    
+    # Timestamps
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_by: Optional[str] = None
+
 # ============================================
 # SEO COMMON FIELDS (Mixin)
 # ============================================
