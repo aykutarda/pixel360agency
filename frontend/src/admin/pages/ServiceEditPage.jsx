@@ -10,9 +10,12 @@ import {
   ChevronDown,
   Plus,
   Trash2,
-  Info
+  Info,
+  Send
 } from 'lucide-react';
 import { Toaster, toast } from 'sonner';
+import PublishGuardModal, { validatePublish } from '../components/PublishGuard';
+import ChangeLog from '../components/ChangeLog';
 
 const ServiceEditPage = () => {
   const { id } = useParams();
