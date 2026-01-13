@@ -11,7 +11,7 @@ import uuid
 from datetime import datetime, timezone
 
 # Import CMS routes
-from routes import cms, seo, auth, seed, site_sections
+from routes import cms, seo, auth, seed, site_sections, measurement
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
