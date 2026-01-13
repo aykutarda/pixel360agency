@@ -1,6 +1,5 @@
-import React from 'react';
-import { Brain, Cpu, TrendingUp, Users, Wand2, BarChart3, ArrowRight, Sparkles } from 'lucide-react';
-import { aiCapabilitiesData } from '../data/mock';
+import React, { useEffect, useState } from 'react';
+import { Brain, Cpu, TrendingUp, Users, Wand2, BarChart3, ArrowRight, Sparkles, Target, Zap } from 'lucide-react';
 
 const iconMap = {
   0: Brain,
@@ -12,9 +11,27 @@ const iconMap = {
 };
 
 const AICapabilities = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/site/sections/ai_capabilities`);
+      const sectionData = await res.json();
+      setData(sectionData);
+    } catch (error) {
+      console.error('Error loading ai_capabilities data:', error);
+    }
+  };
+
   const scrollToContact = () => {
     document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  if (!data) return null;
 
   return (
     <section id="ai" className="relative py-24 px-6 md:px-12 overflow-hidden">
@@ -31,21 +48,21 @@ const AICapabilities = () => {
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-accent/20 border border-purple-500/30 px-4 py-2 mb-6">
             <Brain className="w-4 h-4 text-purple-400 animate-pulse" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-accent text-sm font-mono tracking-wider font-bold">
-              YAPAY ZEKA GÜCÜ
+              {data.badge}
             </span>
             <Sparkles className="w-4 h-4 text-accent animate-pulse" />
           </div>
           <h2 className="font-pixel text-white text-[32px] md:text-[48px] lg:text-[64px] leading-[1] tracking-tight mb-4">
-            <span className="text-accent">A</span>I-POWERED SOLUTIONS
+            <span className="text-accent">{data.title?.charAt(0)}</span>{data.title?.slice(1)}
           </h2>
           <p className="text-gray-400 font-mono text-sm md:text-base max-w-3xl mx-auto">
-            {aiCapabilitiesData.description}
+            {data.subtitle}
           </p>
         </div>
 
         {/* AI Capabilities Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {aiCapabilitiesData.capabilities.map((capability, index) => {
+          {data.items?.map((capability, index) => {
             const IconComponent = iconMap[index] || Brain;
             return (
               <div 
