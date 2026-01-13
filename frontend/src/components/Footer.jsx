@@ -1,8 +1,41 @@
-import React from 'react';
-import { siteData, navLinks, servicesData, trustBadges } from '../data/mock';
-import { Phone, Mail, MapPin, MessageCircle, Brain, ArrowUpRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Phone, Mail, MapPin, MessageCircle, Brain, ArrowUpRight, Linkedin, Instagram, Twitter, Facebook, Youtube } from 'lucide-react';
+
+const socialIcons = {
+  linkedin: Linkedin,
+  instagram: Instagram,
+  twitter: Twitter,
+  facebook: Facebook,
+  youtube: Youtube
+};
 
 const Footer = () => {
+  const [data, setData] = useState(null);
+  const [headerData, setHeaderData] = useState(null);
+  const [trustBadges, setTrustBadges] = useState([]);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/site/sections`);
+      const sections = await res.json();
+      setData(sections.footer);
+      setHeaderData(sections.header);
+      setTrustBadges(sections.trust_badges?.partners || []);
+    } catch (error) {
+      console.error('Error loading footer data:', error);
+    }
+  };
+
+  if (!data) return null;
+
+  const contact = data.contact || {};
+  const navLinks = headerData?.nav_links || [];
+
   return (
     <footer className="relative py-16 px-6 md:px-12 border-t border-dark-lighter/50 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-t from-dark-light/50 to-transparent pointer-events-none"></div>
@@ -13,10 +46,10 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className="lg:col-span-1">
             <a href="/" className="font-pixel text-white text-xl tracking-wider block mb-4 group">
-              <span className="text-accent">P</span>IXEL360<span className="text-accent">.</span>
+              <span className="text-accent">{data.logo?.charAt(0)}</span>{data.logo?.slice(1)}
             </a>
             <p className="text-gray-400 font-mono text-sm leading-relaxed mb-4">
-              AI-Powered Growth Agency. Yapay zeka destekli stratejilerle markaları ölçeklenebilir büyümeye taşıyoruz.
+              {data.slogan}. Yapay zeka destekli stratejilerle markaları ölçeklenebilir büyümeye taşıyoruz.
             </p>
             
             {/* Trust Badges */}
@@ -50,21 +83,21 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* Services */}
+          {/* Legal Links */}
           <div>
             <h4 className="font-pixel text-white text-sm mb-6 flex items-center gap-2">
               <div className="w-2 h-2 bg-accent"></div>
-              HİZMETLER
+              YASAL
             </h4>
             <ul className="space-y-3">
-              {servicesData.services.map((service) => (
-                <li key={service.id}>
+              {data.legal_links?.map((link, index) => (
+                <li key={index}>
                   <a 
-                    href="#services"
+                    href={link.url}
                     className="group text-gray-400 font-mono text-sm hover:text-accent transition-colors flex items-center gap-2"
                   >
                     <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    {service.shortName}
+                    {link.name}
                   </a>
                 </li>
               ))}
@@ -80,31 +113,49 @@ const Footer = () => {
             <ul className="space-y-4">
               <li>
                 <a 
-                  href={`tel:${siteData.phone}`}
+                  href={`tel:${contact.phone?.replace(/\s/g, '')}`}
                   className="group flex items-center gap-3 text-gray-400 font-mono text-sm hover:text-accent transition-colors"
                 >
                   <Phone className="w-4 h-4" />
-                  {siteData.phone}
+                  {contact.phone}
                 </a>
               </li>
               <li>
                 <a 
-                  href={`mailto:${siteData.email}`}
+                  href={`mailto:${contact.email}`}
                   className="group flex items-center gap-3 text-gray-400 font-mono text-sm hover:text-accent transition-colors"
                 >
                   <Mail className="w-4 h-4" />
-                  {siteData.email}
+                  {contact.email}
                 </a>
               </li>
               <li className="flex items-start gap-3 text-gray-400 font-mono text-sm">
                 <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                {siteData.address}
+                {contact.address}
               </li>
             </ul>
             
+            {/* Social Links */}
+            <div className="mt-4 flex gap-2">
+              {data.social_links?.map((social, index) => {
+                const IconComponent = socialIcons[social.platform] || ArrowUpRight;
+                return (
+                  <a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-dark-light border border-dark-lighter flex items-center justify-center text-gray-400 hover:text-accent hover:border-accent transition-colors"
+                  >
+                    <IconComponent className="w-4 h-4" />
+                  </a>
+                );
+              })}
+            </div>
+            
             {/* WhatsApp */}
             <a 
-              href={`https://wa.me/${siteData.whatsapp}`}
+              href={`https://wa.me/${contact.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 inline-flex items-center gap-2 bg-green-500/20 text-green-500 font-mono text-sm px-4 py-2 border border-green-500/30 hover:bg-green-500 hover:text-white transition-all"
@@ -118,12 +169,12 @@ const Footer = () => {
         {/* Bottom */}
         <div className="border-t border-dark-lighter/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <span className="text-gray-500 font-mono text-xs">
-            {siteData.copyright} - Tüm Hakları Saklıdır.
+            {data.copyright}
           </span>
           <div className="flex items-center gap-2">
             <Brain className="w-4 h-4 text-accent" />
             <span className="text-accent font-mono text-xs font-bold">
-              {siteData.slogan}
+              {data.slogan}
             </span>
           </div>
         </div>
