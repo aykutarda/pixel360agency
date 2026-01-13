@@ -140,9 +140,7 @@ const BlogListPage = () => {
                       <p className="text-gray-500 text-sm">/blog/{post.seo_slug}</p>
                     </td>
                     <td className="px-4 py-4">
-                      <span className="text-xs px-2 py-1 bg-purple-400/10 text-purple-400 uppercase">
-                        {post.intent_type || 'informational'}
-                      </span>
+                      <IntentBadge intent={post.intent_type || 'informational'} />
                     </td>
                     <td className="px-4 py-4">
                       <span className={`flex items-center gap-1 text-xs ${
