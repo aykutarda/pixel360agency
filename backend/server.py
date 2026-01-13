@@ -10,6 +10,8 @@ from typing import List
 import uuid
 from datetime import datetime, timezone
 
+# Import CMS routes
+from routes import cms, seo, auth, seed
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -17,10 +19,14 @@ load_dotenv(ROOT_DIR / '.env')
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = client[os.environ.get('DB_NAME', 'pixel360')]
 
 # Create the main app without a prefix
-app = FastAPI()
+app = FastAPI(
+    title="Pixel360 CMS API",
+    description="AI-Powered Growth Agency - Content Management System",
+    version="1.0.0"
+)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
@@ -40,7 +46,7 @@ class StatusCheckCreate(BaseModel):
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Pixel360 CMS API v1.0"}
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
@@ -66,7 +72,15 @@ async def get_status_checks():
     
     return status_checks
 
-# Include the router in the main app
+# Include CMS routes
+api_router.include_router(cms.router, prefix="/cms", tags=["CMS"])
+api_router.include_router(auth.router, prefix="/auth", tags=["Authentication"])
+api_router.include_router(seed.router, prefix="/seed", tags=["Seed Data"])
+
+# Include SEO routes (sitemap, robots.txt)
+app.include_router(seo.router, tags=["SEO"])
+
+# Include the main API router
 app.include_router(api_router)
 
 app.add_middleware(
