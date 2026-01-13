@@ -238,26 +238,53 @@ const Hero = () => {
             {logoSettings.section_title}
           </p>
           
-          {/* Logo Carousel Container */}
-          <div className="relative overflow-hidden py-4">
+          {/* Draggable Logo Carousel Container */}
+          <div className="relative">
             {/* Gradient Fade Edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none"></div>
             
-            {/* Marquee Track */}
-            <div className={`flex ${getAnimationClass()} gap-6 md:gap-8`}>
-              {[...clientLogos, ...clientLogos].map((client, index) => (
+            {/* Scrollable Track - Drag to scroll */}
+            <div 
+              className="flex gap-5 md:gap-6 overflow-x-auto pb-12 pt-2 px-4 scrollbar-hide cursor-grab active:cursor-grabbing select-none"
+              style={{ 
+                scrollbarWidth: 'none', 
+                msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch'
+              }}
+              onMouseDown={(e) => {
+                const slider = e.currentTarget;
+                slider.dataset.isDown = 'true';
+                slider.dataset.startX = e.pageX - slider.offsetLeft;
+                slider.dataset.scrollLeft = slider.scrollLeft;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.dataset.isDown = 'false';
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.dataset.isDown = 'false';
+              }}
+              onMouseMove={(e) => {
+                const slider = e.currentTarget;
+                if (slider.dataset.isDown !== 'true') return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - parseInt(slider.dataset.startX || '0')) * 2;
+                slider.scrollLeft = parseInt(slider.dataset.scrollLeft || '0') - walk;
+              }}
+            >
+              {clientLogos.map((client, index) => (
                 <div 
                   key={index}
-                  className="flex-shrink-0 group cursor-pointer"
+                  className="flex-shrink-0 group"
                 >
                   {/* Premium Logo Card */}
                   <div className="relative">
-                    {/* Glitch Effect Layers - More Visible */}
+                    {/* Glitch Effect Layers */}
                     <div className="absolute inset-0 rounded-xl bg-purple-500/30 translate-x-[3px] translate-y-[-3px] opacity-0 group-hover:opacity-100 transition-all duration-300 blur-[1px]"></div>
                     <div className="absolute inset-0 rounded-xl bg-cyan-400/30 translate-x-[-3px] translate-y-[3px] opacity-0 group-hover:opacity-100 transition-all duration-300 blur-[1px]"></div>
                     
-                    {/* Main Logo Container - Dynamic Size */}
+                    {/* Main Logo Container */}
                     <div className={`relative ${getLogoSizeClasses()}
                                     bg-[#111]/80 backdrop-blur-md 
                                     border border-gray-700/50 rounded-xl
@@ -268,44 +295,54 @@ const Hero = () => {
                                     group-hover:shadow-[0_0_30px_rgba(200,255,0,0.15)]
                                     transition-all duration-500`}>
                       
-                      {/* Corner Accent Lines - Tech Style */}
+                      {/* Corner Accent Lines */}
                       <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-accent/20 rounded-tl group-hover:border-accent/60 transition-colors duration-300"></div>
                       <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/20 rounded-tr group-hover:border-accent/60 transition-colors duration-300"></div>
                       <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/20 rounded-bl group-hover:border-accent/60 transition-colors duration-300"></div>
                       <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-accent/20 rounded-br group-hover:border-accent/60 transition-colors duration-300"></div>
                       
-                      {/* Logo Content */}
+                      {/* Logo Content - Full Size */}
                       {client.logo_url ? (
                         <img 
                           src={client.logo_url} 
                           alt={client.name} 
-                          className="max-w-[75%] max-h-[65%] object-contain 
-                                     filter grayscale brightness-75 
+                          className="w-[85%] h-[75%] object-contain 
+                                     filter grayscale brightness-90 
                                      group-hover:grayscale-0 group-hover:brightness-100 
-                                     transition-all duration-500"
+                                     transition-all duration-500
+                                     pointer-events-none"
+                          draggable="false"
                         />
                       ) : (
                         <span className="text-gray-300 font-mono text-xl md:text-2xl font-bold tracking-wider
-                                         group-hover:text-white transition-colors duration-300">
+                                         group-hover:text-white transition-colors duration-300
+                                         pointer-events-none select-none">
                           {client.logo || client.name?.substring(0, 4).toUpperCase()}
                         </span>
                       )}
                       
-                      {/* Subtle Scanline Overlay */}
+                      {/* Scanline Overlay */}
                       <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.03)_50%)] bg-[length:100%_3px] pointer-events-none opacity-50"></div>
                       
                       {/* Hover Glow Ring */}
                       <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/5 group-hover:ring-accent/20 transition-all duration-300"></div>
                     </div>
                     
-                    {/* Brand Name Label */}
-                    <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-0 translate-y-1">
-                      <span className="text-xs font-mono text-accent/80 whitespace-nowrap bg-dark/80 px-2 py-0.5 rounded">{client.name}</span>
+                    {/* Brand Name Label - Fixed Position */}
+                    <div className="absolute -bottom-8 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
+                      <span className="text-xs font-mono text-accent whitespace-nowrap bg-[#0a0a0a]/90 px-3 py-1 rounded border border-accent/30">
+                        {client.name}
+                      </span>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+            
+            {/* Scroll Hint */}
+            <p className="text-center text-gray-600 text-xs font-mono mt-2">
+              ← Sürükleyerek gezin →
+            </p>
           </div>
         </div>
 
