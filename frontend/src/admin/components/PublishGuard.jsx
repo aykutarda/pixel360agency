@@ -224,4 +224,4 @@ const PublishGuardModal = ({
 };
 
 export default PublishGuardModal;
-export { validatePublish, VALIDATION_RULES };
+export { VALIDATION_RULES };
