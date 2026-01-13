@@ -506,6 +506,52 @@ const MeasurementSettingsPage = () => {
           </div>
         </div>
 
+        {/* Live Status Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+          <StatusCard
+            title="GTM"
+            configured={!!settings?.gtm_container_id}
+            enabled={settings?.gtm_enabled}
+            id={settings?.gtm_container_id}
+            icon={Activity}
+          />
+          <StatusCard
+            title="GA4"
+            configured={!!settings?.ga4_measurement_id}
+            enabled={settings?.ga4_enabled}
+            id={settings?.ga4_measurement_id}
+            icon={Activity}
+          />
+          <StatusCard
+            title="Google Ads"
+            configured={!!settings?.google_ads_id}
+            enabled={settings?.google_ads_enabled}
+            id={settings?.google_ads_id}
+            icon={TrendingUp}
+          />
+          <StatusCard
+            title="Meta Pixel"
+            configured={!!settings?.meta_pixel_id}
+            enabled={settings?.meta_pixel_enabled}
+            id={settings?.meta_pixel_id}
+            icon={Radio}
+          />
+          <StatusCard
+            title="Clarity"
+            configured={!!settings?.clarity_project_id}
+            enabled={settings?.clarity_enabled}
+            id={settings?.clarity_project_id}
+            icon={settings?.clarity_enabled ? Wifi : WifiOff}
+          />
+          <StatusCard
+            title="Hotjar"
+            configured={!!settings?.hotjar_site_id}
+            enabled={settings?.hotjar_enabled}
+            id={settings?.hotjar_site_id}
+            icon={settings?.hotjar_enabled ? Wifi : WifiOff}
+          />
+        </div>
+
         {/* Test Results */}
         {testResults && (
           <div className={`p-4 border ${testResults.overall?.ready ? 'border-green-500/50 bg-green-500/10' : 'border-yellow-500/50 bg-yellow-500/10'}`}>
