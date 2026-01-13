@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowUpRight, TrendingUp } from 'lucide-react';
-import { portfolioData } from '../data/mock';
 
 const Portfolio = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/site/sections/portfolio`);
+      const sectionData = await res.json();
+      setData(sectionData);
+    } catch (error) {
+      console.error('Error loading portfolio data:', error);
+    }
+  };
+
+  if (!data) return null;
+
+  const colors = [
+    'from-blue-500/40',
+    'from-green-500/40',
+    'from-purple-500/40',
+    'from-orange-500/40'
+  ];
+
   return (
     <section id="portfolio" className="relative py-24 px-6 md:px-12 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-dark-light/20 via-transparent to-dark-light/20 pointer-events-none"></div>
@@ -13,38 +37,34 @@ const Portfolio = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-2 mb-6">
             <TrendingUp className="w-4 h-4 text-accent" />
-            <span className="text-accent text-sm font-mono tracking-wider">KANITLANMIŞ SONUÇLAR</span>
+            <span className="text-accent text-sm font-mono tracking-wider">{data.badge}</span>
           </div>
           <h2 className="font-pixel text-white text-[32px] md:text-[48px] lg:text-[64px] leading-[1] tracking-tight mb-4">
-            <span className="text-accent">B</span>AŞARI HİKAYELERİ
+            <span className="text-accent">{data.title?.charAt(0)}</span>{data.title?.slice(1)}
           </h2>
           <p className="text-gray-400 font-mono text-sm md:text-base">
-            {portfolioData.subtitle}
+            {data.subtitle}
           </p>
         </div>
         
         {/* Portfolio Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {portfolioData.projects.map((project, index) => (
+          {data.projects?.map((project, index) => (
             <div 
-              key={project.id}
+              key={index}
               className="group relative overflow-hidden bg-dark-light/50 backdrop-blur-sm border border-dark-lighter hover:border-accent/50 transition-all duration-500"
             >
               {/* Corner decorations */}
               <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-accent/30 group-hover:border-accent group-hover:w-12 group-hover:h-12 transition-all duration-300 z-20"></div>
               <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-accent/30 group-hover:border-accent group-hover:w-12 group-hover:h-12 transition-all duration-300 z-20"></div>
               
-              {/* Image */}
-              <div className="aspect-[16/10] overflow-hidden">
-                <img 
-                  src={project.image}
-                  alt={project.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+              {/* Background with gradient */}
+              <div className="aspect-[16/10] overflow-hidden bg-dark-light">
+                <div className={`w-full h-full bg-gradient-to-br ${colors[index % colors.length]} to-dark-light`}></div>
               </div>
               
               {/* Overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-t ${project.color} via-dark/80 to-dark/40 opacity-90`}></div>
+              <div className={`absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-transparent opacity-90`}></div>
               
               {/* Content */}
               <div className="absolute inset-0 p-6 flex flex-col justify-end">
@@ -62,7 +82,7 @@ const Portfolio = () => {
                       {project.result}
                     </div>
                     <div className="text-gray-400 text-xs font-mono">
-                      {project.subResult}
+                      {project.description}
                     </div>
                   </div>
                   <div className="w-12 h-12 bg-accent/10 border border-accent/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:bg-accent">
