@@ -156,6 +156,13 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 | GET | `/api/site/sections/{key}` | Get specific section |
 | PUT | `/api/site/sections/{key}` | Update section (auth required) |
 
+### File Upload API (NEW)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/upload/logo` | Upload logo image (public - no auth) |
+| GET | `/api/upload/logos` | List all uploaded logos |
+| DELETE | `/api/upload/logo/{filename}` | Delete a logo |
+
 ### Site Settings (NEW)
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -219,6 +226,9 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 - `/app/test_reports/iteration_2.json` - Phase 2.1 tests (22/22 passed, 100%)
 - `/app/tests/test_admin_auth.py` - Admin auth test suite
 
+- `/app/test_reports/iteration_3.json` - Phase 2.7 tests - Logo Upload (11/11 passed, 100%)
+- `/app/tests/test_logo_upload.py` - Logo upload test suite
+
 ## Upcoming Tasks (P1)
 
 ### Phase 3: Enhanced Case Studies
@@ -243,7 +253,7 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 
 ---
 **Last Updated**: January 13, 2026
-**Status**: Phase 2.5 Complete - Measurement & Conversion Foundation
+**Status**: Phase 2.7 Complete - Client Logo Upload Feature
 
 ## Measurement Setup Instructions
 
