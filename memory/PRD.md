@@ -5,11 +5,11 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 
 ## Tech Stack
 - **Frontend**: React 19, Tailwind CSS, react-router-dom, react-helmet-async
-- **Backend**: FastAPI, Motor (async MongoDB)
+- **Backend**: FastAPI, Motor (async MongoDB), JWT Auth
 - **Database**: MongoDB
 - **Hosting**: Emergent Platform
 
-## Current Status: Phase 2 Complete ✅
+## Current Status: Phase 2.1 Complete ✅
 
 ### Completed Features
 
@@ -17,108 +17,142 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 - [x] Pydantic models for Services, Blog Posts, Hub Pages, Global Settings
 - [x] CRUD API endpoints for all content types (`/api/cms/*`)
 - [x] Dynamic sitemap.xml and robots.txt generation (`/api/seo/*`)
-- [x] JWT authentication endpoint (`/api/auth/token`)
 - [x] Database seeding endpoint (`/api/cms/seed`)
-- [x] Automatic 301 redirects on slug changes
+- [x] Automatic 301 redirects on slug changes (only for published content)
 
 #### Phase 2: Frontend Integration (Complete ✅)
 - [x] Multi-page routing setup (`App.js`)
-  - `/` - Homepage
-  - `/hizmetler/:slug` - Service detail pages
-  - `/blog/:slug` - Blog post pages
-  - `/konular/:slug` - Hub/topic pages
 - [x] Dynamic SEO meta tags with `react-helmet-async`
-  - Title, description, canonical URL
-  - Open Graph tags
-  - Twitter cards
-  - JSON-LD schema markup (Service, Article, FAQ, Breadcrumb)
 - [x] API integration via `frontend/src/api/cms.js`
 - [x] Services component fetches from backend API
-- [x] ServicePage with Problem/Solution blocks, process steps, KPIs, FAQ
-- [x] BlogPage with rich content rendering, related posts, tags
-- [x] HubPage with featured services, content grouped by intent type
-- [x] 404 handling with proper SEO (noindex)
-- [x] All tests passing (26/26 backend, 100% frontend)
+- [x] ServicePage, BlogPage, HubPage with dynamic content
+
+#### Phase 2.1: Admin Panel (Complete ✅)
+- [x] **JWT Authentication**
+  - Bootstrap admin from env vars (`BOOTSTRAP_ADMIN_EMAIL`, `BOOTSTRAP_ADMIN_PASSWORD`)
+  - Force password change on first login
+  - Rate limiting: 5 failed attempts = 10 min lockout
+- [x] **Admin Dashboard** at `/admin`
+  - Stats overview (services, blog, hubs, redirects count)
+  - Quick action buttons
+  - Recent activity feed
+- [x] **Content Management**
+  - Services list & edit pages
+  - Blog posts list page
+  - Hubs list page
+  - All with draft/published status
+- [x] **Site Content Editor** at `/admin/site-content`
+  - Header (logo, nav links, CTA button)
+  - Hero (badge, title, subtitle, description, CTAs)
+  - Stats (4 metrics)
+  - Trust Badges (partners, client logos)
+  - Footer (contact info, social links, copyright)
+- [x] **Dynamic Homepage**
+  - Header, Hero, Stats fetch from `/api/site/sections`
+  - Fallback data for reliability
 
 ### Database Content
 - 3 Services: Google Ads Yönetimi, Meta Ads Yönetimi, SEO Hizmeti
 - 6 Blog Posts: Various informational articles
 - 3 Hub Pages: Google Ads, Meta Ads, SEO topic centers
-- 2 Categories, Global Settings configured
+- Site Sections: header, hero, stats, trust_badges, footer
+
+## Admin Panel Access
+- **URL**: `/admin`
+- **Email**: `admin@pixel360.com.tr`
+- **Password**: `NewSecurePass2024!` (changed from initial bootstrap)
 
 ## API Endpoints
+
+### Auth Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/login` | Login with email/password |
+| POST | `/api/auth/bootstrap` | Create admin from env vars |
+| POST | `/api/auth/change-password` | Change password (auth required) |
+| GET | `/api/auth/me` | Get current user info |
+
+### Site Sections (NEW)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/site/sections` | Get all sections (public) |
+| GET | `/api/site/sections/{key}` | Get specific section |
+| PUT | `/api/site/sections/{key}` | Update section (auth required) |
 
 ### CMS Endpoints
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/cms/services` | List all services |
 | GET | `/api/cms/services/by-slug/{slug}` | Get service by slug |
+| POST/PUT/DELETE | `/api/cms/services` | CRUD operations |
 | GET | `/api/cms/blog` | List all blog posts |
-| GET | `/api/cms/blog/by-slug/{slug}` | Get blog post by slug |
 | GET | `/api/cms/hubs` | List all hub pages |
-| GET | `/api/cms/hubs/by-slug/{slug}` | Get hub by slug |
-| GET | `/api/cms/settings` | Get global settings |
 | GET | `/api/cms/redirects` | List redirects |
-| GET | `/api/cms/authors` | List authors |
-| GET | `/api/cms/categories` | List categories |
-
-### SEO Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/seo/sitemap.xml` | Dynamic XML sitemap |
-| GET | `/api/seo/robots.txt` | Robots.txt |
-
-### Auth Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/token` | JWT token generation |
 
 ## File Structure
 ```
 /app
 ├── backend/
-│   ├── server.py          # Main FastAPI app
-│   ├── models.py          # Pydantic models
+│   ├── server.py
+│   ├── models.py
 │   └── routes/
+│       ├── auth.py        # JWT auth with rate limiting
 │       ├── cms.py         # Content CRUD
-│       ├── seo.py         # Sitemap/robots
-│       ├── auth.py        # JWT auth
-│       └── seed.py        # DB seeding
+│       ├── site_sections.py # Site content API
+│       ├── seo.py
+│       └── seed.py
 └── frontend/
     └── src/
-        ├── App.js         # Router with HelmetProvider
-        ├── api/
-        │   └── cms.js     # API functions
+        ├── App.js
+        ├── admin/           # NEW: Admin panel
+        │   ├── api.js
+        │   ├── AuthContext.jsx
+        │   ├── components/
+        │   │   └── AdminLayout.jsx
+        │   └── pages/
+        │       ├── LoginPage.jsx
+        │       ├── ChangePasswordPage.jsx
+        │       ├── DashboardPage.jsx
+        │       ├── ServicesListPage.jsx
+        │       ├── ServiceEditPage.jsx
+        │       ├── BlogListPage.jsx
+        │       ├── HubsListPage.jsx
+        │       └── SiteContentPage.jsx
         ├── components/
-        │   ├── SEOHead.jsx    # Dynamic meta tags
-        │   └── Services.jsx   # API-connected grid
+        │   ├── Header.jsx   # Dynamic from API
+        │   ├── Hero.jsx     # Dynamic from API
+        │   └── Services.jsx # Dynamic from API
         └── pages/
-            ├── HomePage.jsx   # Landing page
+            ├── HomePage.jsx
             ├── ServicePage.jsx
             ├── BlogPage.jsx
             └── HubPage.jsx
 ```
 
+## Test Reports
+- `/app/test_reports/iteration_1.json` - Phase 2 tests (all passed)
+- `/app/test_reports/iteration_2.json` - Phase 2.1 tests (22/22 passed, 100%)
+- `/app/tests/test_admin_auth.py` - Admin auth test suite
+
 ## Upcoming Tasks (P0)
 
-### Phase 3: Admin Panel
-- [ ] Create `/admin` route with JWT protection
-- [ ] Service CRUD interface
-- [ ] Blog post CRUD interface  
-- [ ] Hub page CRUD interface
-- [ ] Global settings management
-- [ ] Redirect management
+### Phase 2.2: Enhanced Site Content
+- [ ] Portfolio/Projects management
+- [ ] Testimonials management
+- [ ] Why Us section management
+- [ ] Framework section management
+- [ ] AI Capabilities section management
 
-### Phase 4: Enhancements
-- [ ] Case Studies section with detailed format
-- [ ] Interactive lead-gen tools (Growth Calculator)
-- [ ] AI-powered SEO Audit tool
+### Phase 3: Case Studies
+- [ ] Case study data model
+- [ ] Challenge → Strategy → Execution → Results format
+- [ ] `/case-studies/:slug` route
+
+### Future Tasks
+- [ ] Interactive lead-gen tools (Growth Calculator, AI SEO Audit)
 - [ ] Enhanced CMS (user roles, versioning)
-
-## Test Reports
-- `/app/test_reports/iteration_1.json` - All tests passed
-- `/app/tests/test_cms_api.py` - 26 API tests
+- [ ] Content preview with draft token
 
 ---
 **Last Updated**: January 13, 2026
-**Status**: Phase 2 Complete - Ready for Admin Panel (Phase 3)
+**Status**: Phase 2.1 Complete - Admin Panel with Site Content Editor
