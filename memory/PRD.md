@@ -144,25 +144,20 @@ Premium dijital pazarlama ajansı web sitesi. SEO-uyumlu, headless CMS destekli,
 - `/app/test_reports/iteration_2.json` - Phase 2.1 tests (22/22 passed, 100%)
 - `/app/tests/test_admin_auth.py` - Admin auth test suite
 
-## Upcoming Tasks (P0)
+## Upcoming Tasks (P1)
 
-### Phase 2.2: Enhanced Site Content
-- [ ] Portfolio/Projects management
-- [ ] Testimonials management
-- [ ] Why Us section management
-- [ ] Framework section management
-- [ ] AI Capabilities section management
+### Phase 3: Enhanced Case Studies
+- [ ] Case study data model with Challenge → Strategy → Execution → Results
+- [ ] Case study CRUD API endpoints
+- [ ] `/case-studies/:slug` dynamic route
+- [ ] Case study editor in admin panel
 
-### Phase 3: Case Studies
-- [ ] Case study data model
-- [ ] Challenge → Strategy → Execution → Results format
-- [ ] `/case-studies/:slug` route
-
-### Future Tasks
+### Future Tasks (P2)
 - [ ] Interactive lead-gen tools (Growth Calculator, AI SEO Audit)
 - [ ] Enhanced CMS (user roles, versioning)
 - [ ] Content preview with draft token
+- [ ] Image upload/management system
 
 ---
 **Last Updated**: January 13, 2026
-**Status**: Phase 2.1 Complete - Admin Panel with Site Content Editor
+**Status**: Phase 2.2 Complete - Full CMS Control (All 11 site sections editable)
