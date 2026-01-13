@@ -271,34 +271,71 @@ const ServiceEditPage = () => {
           </div>
         </div>
 
-        {/* Status & Category Row */}
-        <div className="flex gap-4">
-          <div className="flex-1 bg-[#111] border border-[#222] p-4">
-            <label className="block text-gray-400 text-sm mb-2">Durum</label>
-            <select
-              value={formData.status}
-              onChange={(e) => handleChange('status', e.target.value)}
-              className="w-full bg-[#0a0a0a] border border-[#333] text-white px-4 py-2"
-            >
-              <option value="draft">Taslak</option>
-              <option value="published">Yayında</option>
-            </select>
+        {/* Status & Category Row + Sidebar */}
+        <div className="flex gap-6">
+          {/* Main Content */}
+          <div className="flex-1 space-y-6">
+            {/* Status & Category */}
+            <div className="flex gap-4">
+              <div className="flex-1 bg-[#111] border border-[#222] p-4">
+                <label className="block text-gray-400 text-sm mb-2">Durum</label>
+                <select
+                  value={formData.status}
+                  onChange={(e) => handleChange('status', e.target.value)}
+                  className="w-full bg-[#0a0a0a] border border-[#333] text-white px-4 py-2"
+                >
+                  <option value="draft">Taslak</option>
+                  <option value="published">Yayında</option>
+                </select>
+              </div>
+              <div className="flex-1 bg-[#111] border border-[#222] p-4">
+                <label className="block text-gray-400 text-sm mb-2">Kategori</label>
+                <select
+                  value={formData.category}
+                  onChange={(e) => handleChange('category', e.target.value)}
+                  className="w-full bg-[#0a0a0a] border border-[#333] text-white px-4 py-2"
+                >
+                  <option value="performance">Performance</option>
+                  <option value="social">Social</option>
+                  <option value="seo">SEO</option>
+                  <option value="creative">Creative</option>
+                  <option value="strategy">Strategy</option>
+                  <option value="production">Production</option>
+                </select>
+              </div>
+            </div>
+
+            {/* SEO Status Preview */}
+            {formData.status === 'published' && !seoValidation.isValid && (
+              <div className="bg-red-500/10 border border-red-500/30 p-4">
+                <div className="flex items-center gap-2 text-red-400 text-sm font-medium mb-2">
+                  <AlertCircle className="w-4 h-4" />
+                  SEO Sorunları ({seoValidation.errors.length})
+                </div>
+                <ul className="text-red-400 text-xs space-y-1">
+                  {seoValidation.errors.slice(0, 3).map((err, i) => (
+                    <li key={i}>• {err.message}</li>
+                  ))}
+                  {seoValidation.errors.length > 3 && (
+                    <li>• ve {seoValidation.errors.length - 3} sorun daha...</li>
+                  )}
+                </ul>
+              </div>
+            )}
           </div>
-          <div className="flex-1 bg-[#111] border border-[#222] p-4">
-            <label className="block text-gray-400 text-sm mb-2">Kategori</label>
-            <select
-              value={formData.category}
-              onChange={(e) => handleChange('category', e.target.value)}
-              className="w-full bg-[#0a0a0a] border border-[#333] text-white px-4 py-2"
-            >
-              <option value="performance">Performance</option>
-              <option value="social">Social</option>
-              <option value="seo">SEO</option>
-              <option value="creative">Creative</option>
-              <option value="strategy">Strategy</option>
-              <option value="production">Production</option>
-            </select>
-          </div>
+
+          {/* Sidebar - Change Log */}
+          {!isNew && (
+            <div className="w-72 flex-shrink-0">
+              <ChangeLog
+                createdAt={formData.created_at}
+                createdBy={formData.created_by}
+                updatedAt={formData.updated_at}
+                updatedBy={formData.updated_by}
+                lastChangeSummary={formData.last_change_summary}
+              />
+            </div>
+          )}
         </div>
 
         {/* Tabs */}
