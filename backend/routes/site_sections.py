@@ -97,6 +97,169 @@ DEFAULT_SECTIONS = {
             {"name": "Gizlilik Politikası", "url": "/gizlilik"},
             {"name": "Kullanım Şartları", "url": "/kullanim-sartlari"}
         ]
+    },
+    "why_us": {
+        "badge": "NEDEN BIZ?",
+        "title": "FARKIMIZ",
+        "subtitle": "360° dijital büyüme yaklaşımımız",
+        "items": [
+            {
+                "title": "AI-Destekli Optimizasyon",
+                "description": "Makine öğrenmesi algoritmaları ile kampanyalarınızı 7/24 optimize ediyoruz.",
+                "icon": "brain"
+            },
+            {
+                "title": "Şeffaf Raporlama",
+                "description": "Gerçek zamanlı dashboard'lar ile tüm metrikleri anlık takip edin.",
+                "icon": "chart"
+            },
+            {
+                "title": "Dedicated Ekip",
+                "description": "Her müşterimize özel stratejist, kreatif ve medya uzmanı atıyoruz.",
+                "icon": "users"
+            },
+            {
+                "title": "Performans Garantisi",
+                "description": "Hedeflere ulaşamazsak, ücret almıyoruz. Sonuç odaklı çalışıyoruz.",
+                "icon": "target"
+            }
+        ]
+    },
+    "ai_capabilities": {
+        "badge": "AI GÜCÜ",
+        "title": "YAPAY ZEKA YETENEKLERİMİZ",
+        "subtitle": "En son AI teknolojileri ile pazarlama performansınızı üst seviyeye taşıyoruz",
+        "items": [
+            {
+                "name": "Akıllı Teklif Yönetimi",
+                "description": "ML algoritmaları ile bid'leri otomatik optimize ediyoruz",
+                "metric": "ROI +180%"
+            },
+            {
+                "name": "Predictive Analytics",
+                "description": "Gelecek performansı tahmin ederek proaktif aksiyonlar alıyoruz",
+                "metric": "Accuracy %94"
+            },
+            {
+                "name": "Creative AI",
+                "description": "AI destekli reklam metinleri ve görsel optimizasyonu",
+                "metric": "CTR +65%"
+            },
+            {
+                "name": "Audience Intelligence",
+                "description": "Hedef kitle segmentasyonu ve lookalike modelleme",
+                "metric": "CPA -40%"
+            },
+            {
+                "name": "Attribution AI",
+                "description": "Çoklu temas noktası attribution modellemesi",
+                "metric": "Insight +3x"
+            },
+            {
+                "name": "Anomaly Detection",
+                "description": "Performans anomalilerini anında tespit ve uyarı",
+                "metric": "Response <1dk"
+            }
+        ]
+    },
+    "framework": {
+        "badge": "METODOLOJI",
+        "title": "360° BÜYÜME FRAMEWORK",
+        "subtitle": "Kanıtlanmış metodolojimiz ile sürdürülebilir büyüme",
+        "steps": [
+            {
+                "phase": "01",
+                "name": "KEŞİF & ANALİZ",
+                "description": "Mevcut durumunuzu, rakiplerinizi ve fırsatları derinlemesine analiz ediyoruz."
+            },
+            {
+                "phase": "02",
+                "name": "STRATEJİ & PLANLAMA",
+                "description": "Veriye dayalı, ölçülebilir hedeflerle büyüme stratejisi oluşturuyoruz."
+            },
+            {
+                "phase": "03",
+                "name": "UYGULAMA & OPTİMİZASYON",
+                "description": "AI destekli kampanyaları hayata geçiriyor, sürekli optimize ediyoruz."
+            },
+            {
+                "phase": "04",
+                "name": "ÖLÇÜMLEME & RAPORLAMA",
+                "description": "Şeffaf raporlama ile ROI'nizi takip ediyor, aksiyonlar alıyoruz."
+            }
+        ]
+    },
+    "portfolio": {
+        "badge": "BAŞARILARIMIZ",
+        "title": "BAŞARI HİKAYELERİ",
+        "subtitle": "Müşterilerimizle birlikte elde ettiğimiz sonuçlar",
+        "projects": [
+            {
+                "name": "E-Ticaret Devi",
+                "category": "E-Commerce",
+                "result": "+340% ROAS",
+                "description": "6 ayda ROAS'ı 3.4x artırdık"
+            },
+            {
+                "name": "SaaS Startup",
+                "category": "B2B SaaS",
+                "result": "-65% CAC",
+                "description": "Müşteri edinme maliyetini %65 düşürdük"
+            },
+            {
+                "name": "Perakende Zinciri",
+                "category": "Retail",
+                "result": "+200% Traffic",
+                "description": "Organik trafiği 3 ayda 3x artırdık"
+            },
+            {
+                "name": "Fintech App",
+                "category": "Finance",
+                "result": "500K+ Install",
+                "description": "App kurulum maliyetini %40 düşürdük"
+            }
+        ]
+    },
+    "testimonials": {
+        "badge": "REFERANSLAR",
+        "title": "MÜŞTERİLERİMİZ NE DİYOR?",
+        "items": [
+            {
+                "name": "Ahmet Yılmaz",
+                "title": "CEO",
+                "company": "TechStartup",
+                "quote": "Pixel360 ile çalışmaya başladıktan sonra ROAS'ımız 3x arttı. AI destekli optimizasyon gerçekten fark yaratıyor.",
+                "avatar": "AY"
+            },
+            {
+                "name": "Zeynep Kaya",
+                "title": "Marketing Director",
+                "company": "E-Commerce Co",
+                "quote": "Şeffaf raporlama ve dedicated ekip yaklaşımları sayesinde tam kontrol sahibiyiz.",
+                "avatar": "ZK"
+            },
+            {
+                "name": "Mehmet Demir",
+                "title": "Founder",
+                "company": "SaaS Platform",
+                "quote": "CAC'ımızı %60 düşürdüler. ROI odaklı çalışmaları bizi çok memnun etti.",
+                "avatar": "MD"
+            }
+        ]
+    },
+    "contact": {
+        "badge": "İLETİŞİM",
+        "title": "BİRLİKTE BÜYÜYELİM",
+        "subtitle": "Markanızın büyüme potansiyelini konuşalım",
+        "form_title": "Ücretsiz Strateji Görüşmesi",
+        "form_description": "30 dakikalık ücretsiz görüşmede büyüme fırsatlarınızı analiz edelim.",
+        "form_cta": "GÖRÜŞME TALEP ET",
+        "features": [
+            "Ücretsiz marka analizi",
+            "Rakip analizi raporu",
+            "Büyüme yol haritası",
+            "ROI projeksiyonu"
+        ]
     }
 }
 
