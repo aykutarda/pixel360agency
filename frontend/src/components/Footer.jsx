@@ -46,7 +46,7 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className="lg:col-span-1">
             <a href="/" className="font-pixel text-white text-xl tracking-wider block mb-4 group">
-              <span className="text-accent">{data.logo?.charAt(0)}</span>{data.logo?.slice(1)}
+              <span className="text-accent glitch" data-text={data.logo?.charAt(0)}>{data.logo?.charAt(0)}</span>{data.logo?.slice(1)}
             </a>
             <p className="text-gray-400 font-mono text-sm leading-relaxed mb-4">
               {data.slogan}. Yapay zeka destekli stratejilerle markaları ölçeklenebilir büyümeye taşıyoruz.
