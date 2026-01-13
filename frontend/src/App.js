@@ -50,6 +50,9 @@ function App() {
     <HelmetProvider>
       <AuthProvider>
         <div className="App">
+          {/* GTM Script - loads dynamically from backend config */}
+          <GTMScript />
+          
           <BrowserRouter>
             <Routes>
               {/* Public Routes */}
@@ -65,6 +68,7 @@ function App() {
               <Route path="/admin/blog" element={<AdminRoute><BlogListPage /></AdminRoute>} />
               <Route path="/admin/hubs" element={<AdminRoute><HubsListPage /></AdminRoute>} />
               <Route path="/admin/site-content" element={<AdminRoute><SiteContentPage /></AdminRoute>} />
+              <Route path="/admin/measurement" element={<AdminRoute><MeasurementSettingsPage /></AdminRoute>} />
               
               {/* Fallback */}
               <Route path="/*" element={<HomePage />} />
