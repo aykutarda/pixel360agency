@@ -209,13 +209,48 @@ const Hero = () => {
             BÜYÜME ORTAKLARIMIZ
           </p>
           <div className="relative overflow-hidden">
-            <div className="flex animate-marquee gap-12">
+            <div className="flex animate-marquee gap-8 md:gap-12">
               {[...clientLogos, ...clientLogos].map((client, index) => (
                 <div 
                   key={index}
-                  className="flex-shrink-0 w-24 h-12 bg-dark-light/30 border border-dark-lighter flex items-center justify-center text-gray-500 font-mono text-sm hover:border-accent/30 hover:text-accent transition-all"
+                  className="flex-shrink-0 group"
                 >
-                  {client.logo}
+                  {/* Glitch Frame Logo Container */}
+                  <div className="relative">
+                    {/* Glitch Effect Layers */}
+                    <div className="absolute inset-0 bg-purple-500/20 translate-x-[2px] translate-y-[-2px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute inset-0 bg-cyan-500/20 translate-x-[-2px] translate-y-[2px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    
+                    {/* Main Logo Container */}
+                    <div className="relative w-28 md:w-32 h-14 md:h-16 bg-dark-light/50 backdrop-blur-sm border border-dark-lighter flex items-center justify-center overflow-hidden group-hover:border-accent/50 transition-all duration-300">
+                      {/* Corner Accents */}
+                      <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent/30 group-hover:border-accent transition-colors"></div>
+                      <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent/30 group-hover:border-accent transition-colors"></div>
+                      <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent/30 group-hover:border-accent transition-colors"></div>
+                      <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent/30 group-hover:border-accent transition-colors"></div>
+                      
+                      {/* Logo Content */}
+                      {client.logo_url ? (
+                        <img 
+                          src={client.logo_url} 
+                          alt={client.name} 
+                          className="max-w-[80%] max-h-[70%] object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                        />
+                      ) : (
+                        <span className="text-gray-400 font-mono text-sm group-hover:text-accent transition-colors">
+                          {client.logo || client.name?.substring(0, 3).toUpperCase()}
+                        </span>
+                      )}
+                      
+                      {/* Scanline Effect */}
+                      <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_4px] pointer-events-none opacity-30"></div>
+                    </div>
+                    
+                    {/* Brand Name Tooltip */}
+                    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="text-xs font-mono text-accent whitespace-nowrap">{client.name}</span>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
