@@ -35,11 +35,61 @@ class GlobalSettings(BaseModel):
     primary_language: str = "tr"
     organization: OrganizationSchema = OrganizationSchema()
     seo_defaults: SEODefaults = SEODefaults()
-    gtm_container_id: Optional[str] = None
-    ga4_measurement_id: Optional[str] = None
-    meta_pixel_id: Optional[str] = None
     robots_txt: str = "User-agent: *\nAllow: /\nSitemap: /sitemap.xml"
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+# ============================================
+# MEASUREMENT & TRACKING SETTINGS
+# ============================================
+
+class GoogleAdsConversion(BaseModel):
+    """Individual Google Ads conversion configuration"""
+    name: str  # e.g., "lead_form_submit", "contact_click"
+    conversion_id: Optional[str] = None  # AW-XXXXXXXXX
+    conversion_label: Optional[str] = None  # Label for this specific conversion
+    is_primary: bool = False  # Primary conversion for optimization
+
+class MeasurementSettings(BaseModel):
+    """All measurement and tracking configuration"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    
+    # Google Tag Manager (Required)
+    gtm_container_id: Optional[str] = None  # GTM-XXXXXXX
+    gtm_enabled: bool = True
+    
+    # Google Analytics 4
+    ga4_measurement_id: Optional[str] = None  # G-XXXXXXXXXX
+    ga4_enabled: bool = True
+    ga4_debug_mode: bool = False
+    
+    # Google Ads
+    google_ads_id: Optional[str] = None  # AW-XXXXXXXXX (main account ID)
+    google_ads_enabled: bool = True
+    google_ads_conversions: List[GoogleAdsConversion] = [
+        GoogleAdsConversion(name="lead_form_submit", is_primary=True),
+        GoogleAdsConversion(name="contact_click"),
+        GoogleAdsConversion(name="service_cta_click"),
+    ]
+    
+    # Meta (Facebook) Pixel
+    meta_pixel_id: Optional[str] = None  # 15-16 digit number
+    meta_pixel_enabled: bool = True
+    
+    # Microsoft Clarity (Optional - UX Analytics)
+    clarity_project_id: Optional[str] = None  # Project ID from Clarity
+    clarity_enabled: bool = False
+    
+    # Hotjar (Optional - UX Analytics)
+    hotjar_site_id: Optional[str] = None  # Site ID from Hotjar
+    hotjar_enabled: bool = False
+    
+    # Event Configuration
+    scroll_depth_thresholds: List[int] = [25, 50, 75]  # Percentages
+    time_on_page_thresholds: List[int] = [30, 60]  # Seconds
+    
+    # Timestamps
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_by: Optional[str] = None
 
 # ============================================
 # SEO COMMON FIELDS (Mixin)
