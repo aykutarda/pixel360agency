@@ -53,7 +53,7 @@ const AICapabilities = () => {
             <Sparkles className="w-4 h-4 text-accent animate-pulse" />
           </div>
           <h2 className="font-pixel text-white text-[32px] md:text-[48px] lg:text-[64px] leading-[1] tracking-tight mb-4">
-            <span className="text-accent">{data.title?.charAt(0)}</span>{data.title?.slice(1)}
+            <span className="text-accent glitch" data-text={data.title?.charAt(0)}>{data.title?.charAt(0)}</span>{data.title?.slice(1)}
           </h2>
           <p className="text-gray-400 font-mono text-sm md:text-base max-w-3xl mx-auto">
             {data.subtitle}
