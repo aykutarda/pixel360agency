@@ -211,9 +211,22 @@ const ServiceEditPage = () => {
     { id: 'social', name: 'Sosyal Medya' },
   ];
 
+  // SEO Validation preview
+  const seoValidation = validatePublish(formData, 'service');
+
   return (
     <AdminLayout>
       <Toaster position="top-right" richColors />
+      
+      {/* Publish Guard Modal */}
+      <PublishGuardModal
+        isOpen={showPublishGuard}
+        onClose={() => setShowPublishGuard(false)}
+        onConfirm={saveService}
+        data={formData}
+        contentType="service"
+        isLoading={saving}
+      />
       
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Header */}
